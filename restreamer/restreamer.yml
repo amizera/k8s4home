@@ -1,0 +1,86 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: video
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: video
+  name: restream
+spec:
+  selector:
+    app: restream
+  type: ClusterIP
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: gfs-restream-local-volume
+  namespace: video
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/data/restream"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: video
+  name: gfs-restream-volume-claim
+  labels:
+    app: restream
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 500Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: video
+  name: restream
+  labels:
+    app: restream
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: restream
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: restream
+    spec:
+      containers:
+      - name: restream
+        image: datarhei/restreamer:latest
+        imagePullPolicy: Always
+        ports:
+          - name: http
+            containerPort: 8080
+            protocol: TCP
+        volumeMounts:
+        - name: gfs-restream-volume
+          mountPath: /data
+      hostNetwork: true
+      volumes:
+        - name: gfs-restream-volume
+          persistentVolumeClaim:
+            claimName: gfs-restream-volume-claim
+      

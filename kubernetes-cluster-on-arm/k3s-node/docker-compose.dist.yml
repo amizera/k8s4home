@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+
+  agent:
+    image: "rancher/k3s:${K3S_VERSION:-latest}"
+    restart: "unless-stopped"
+    network_mode: "host"
+    tmpfs:
+      - /run
+      - /var/run
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 65535
+        hard: 65535
+    privileged: true
+    environment:
+      - K3S_URL=https://10.5.65.33:6443
+      - K3S_TOKEN=6f6830d8-39a0-11ee-bc50-6c5c3d0dcab2
+    volumes:
+      - /etc/machine-id:/etc/machine-id:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50k"

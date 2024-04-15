@@ -1,0 +1,162 @@
+---
+- hosts: all
+  become: true
+  gather_facts: yes
+  vars_files:
+    - vars/default.yml
+    - vars/user.yml
+
+  tasks:
+
+    - name: Set a hostname specifying strategy
+      ansible.builtin.hostname:
+        name: "{{ inventory_hostname }}"
+        use: systemd
+      remote_user: root
+
+    - name: Set fact for packages to remove (Ubuntu >= 20.04)
+      set_fact:
+        ubuntu_annoying_packages:
+          - whoopsie # security (CIS 4.1)
+          - apport   # security (CIS 4.1)
+          - command-not-found # annoying
+          - command-not-found-data # annoying
+          - python3-commandnotfound # annoying
+          - snapd # annoying (Ubuntu >= 16.04)
+          - lxd-agent-loader # annoying (Ubuntu 20.04)
+      when: (ansible_distribution == 'Ubuntu') and (ansible_distribution_version >= '20.04')
+
+    - name: Add APT signing key from official Docker repo
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker official repository (Ubuntu 20.04)
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+      when: (ansible_distribution == 'Ubuntu') and (ansible_distribution_version == '20.04')
+
+    - name: Add Docker official repository (Ubuntu 22.04)
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu jammy stable
+        state: present
+      when: (ansible_distribution == 'Ubuntu') and (ansible_distribution_version == '22.04')
+
+    - name: Add Docker official repository (Ubuntu 23.04)
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu lunar stable
+        state: present
+      when: (ansible_distribution == 'Ubuntu') and (ansible_distribution_version == '23.04')
+
+    - name: Update the APT packages index
+      apt:
+        name: "*"
+        state: latest
+        update_cache: yes
+        force_apt_get: yes
+
+    - name: Install all required packages
+      apt:
+        name: "{{ packages }}"
+        state: latest
+        update_cache: yes
+        force_apt_get: yes
+
+    - name: Adding existing user "{{ username }}" to docker group
+      user:
+        name: "{{ username }}"
+        groups: docker
+        append: yes
+
+    - name: Install packages via PIP
+      pip:
+        name:
+          - pyyaml==5.4.1
+        state: latest
+        extra_args: "--no-cache-dir --no-build-isolation"
+
+    - name: Install packages via PIP
+      pip:
+        name:
+          - "Cython<3"
+          - docker
+          - docker-compose
+        state: latest
+    
+    - name: Enable glusterfs service
+      ansible.builtin.service:
+        name: glusterd
+        state: started
+        enabled: yes
+
+    - name: "Build hosts file"
+      lineinfile: dest=/etc/hosts regexp='.*{{ item }}$' line="{{ hostvars[item].ansible_default_ipv4.address }} {{item}}" state=present
+      #when: hostvars[item].ansible_default_ipv4.address is defined
+      with_items: "{{ groups['all'] }}"
+
+    - name: Create a xfs filesystem for glusterfs on /dev/mmcblk2p2
+      community.general.filesystem:
+        fstype: xfs
+        dev: /dev/mmcblk2p2
+        force: true
+
+    - name: Create a directory if it does not exist
+      ansible.builtin.file:
+        path: /mnt/disk4Gv
+        state: directory
+        mode: '0755'
+
+    - name: Mount a volume
+      ansible.posix.mount:
+        path: /mnt/disk4Gv
+        src: /dev/mmcblk2p2
+        opts: defaults
+        state: mounted
+        fstype: xfs  
+
+    - name: Add gluster peers
+      gluster.gluster.gluster_peer:
+        state: present
+        nodes:
+          - "{{ item }}"
+      when: hostvars[item].ansible_default_ipv4.address is defined
+      with_items: "{{ groups['all'] }}"
+      run_once: true
+
+    - name: Create glusterfs volume
+      gluster.gluster.gluster_volume:
+        state: present
+        name: kubeData
+        bricks: /mnt/disk4Gv
+        replicas: 3
+        cluster:
+          - "{{ groups['controller'][0] }}"
+          - "{{ groups['node1'][0] }}"
+          - "{{ groups['node2'][0] }}"
+        force: true
+      when: inventory_hostname == groups['controller'][0]
+      #with_items: "{{ groups['all'] }}"
+      run_once: true
+
+    - name: Create a directory if it does not exist
+      ansible.builtin.file:
+        path: /data
+        state: directory
+        mode: '0755'
+        owner: g3n3zyp
+        group: g3n3zyp
+      ignore_errors: true
+
+    - name: Mount a volume
+      ansible.posix.mount:
+        path: /data
+        src: "{{ groups['controller'][0] | lower }}:/kubeData"
+        opts: defaults,_netdev
+        state: mounted
+        fstype: glusterfs
+
+# Ubuntu 23.04 
+# pip install "Cython<3"
+# pip install pyyaml==5.4.1 --no-cache-dir --no-build-isolation
+# pip install docker-compose

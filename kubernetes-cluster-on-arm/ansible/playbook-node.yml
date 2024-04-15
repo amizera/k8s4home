@@ -1,0 +1,27 @@
+---
+- hosts: node
+  remote_user: g3n3zyp
+  gather_facts: yes
+  vars_files:
+    - vars/default.yml
+    - vars/user.yml
+  tasks:
+
+    - name: Create "/mnt/disk4Gv/local/k3s-node" directory
+      file:
+        path: "/mnt/disk4Gv/local/k3s-node"
+        state: directory
+        mode: 0755
+
+    - name: Copy "docker-compose.yml" to "/mnt/disk4Gv/local/k3s-node/" directory (if not exists)
+      template:
+        src: ../k3s-node/docker-compose.yml.j2
+        dest: /mnt/disk4Gv/local/k3s-node/docker-compose.yml
+        force: no
+        mode: 0644
+
+    - name: Pull services defined in docker-compose.yml
+      command: docker-compose -f /mnt/disk4Gv/local/k3s-node/docker-compose.yml pull
+
+    - name: Run services defined in docker-compose.yml
+      command: docker-compose -f /mnt/disk4Gv/local/k3s-node/docker-compose.yml up -d
