@@ -117,22 +117,6 @@ spec:
       - name: configmap-file
         configMap:
           name: home-assistant-configmap
-      #- name: zigbee
-      #  hostPath:
-      #    path: /dev/zigbee1
-      #    type: FileOrCreate
-      #  hostPath:
-      #    path: /tmp/home-assistant
-      #    type: DirectoryOrCreate
-      # - name: d-bus
-      #   hostPath:
-      #     path: /run/dbus
-      #- name: zigbee
-      #  hostPath:
-      #    path: /dev/ttyACM0
-      #- name: cam
-      #  hostPath:
-      #    path: /dev/video0
 ---
 kind: ConfigMap
 apiVersion: v1
@@ -174,21 +158,3 @@ data:
         - 2405:8100::/32
         - 2a06:98c0::/29
         - 2c0f:f248::/32
-
-    # cover:
-    #   - platform: cover_time_based_synced
-    #     devices:
-    #       my_room_cover_time_based:
-    #         name: Roleta Gabinet
-    #         travelling_time_up: 17
-    #         travelling_time_down: 16
-    #         close_switch_entity_id: switch.relay_08
-    #         open_switch_entity_id: switch.relay_07
-    #         send_stop_at_ends: False #optional
-    #         aliases: #optional
-    #           - gabinet_cover_time_based
-    # modbus:
-    #   - name: modbus_hub
-    #     type: tcp
-    #     host: 10.0.50.7
-    #     port: 502
