@@ -90,7 +90,10 @@ spec:
           name: configmap-file
         - mountPath: /config/automations.yaml
           subPath: automations.yaml
-          name: configmap-file
+          name: gfs-ha-volume
+        - mountPath: /config/customize.yaml
+          subPath: customize.yaml
+          name: gfs-ha-volume
         - mountPath: /media
           name: media-volume          
         # - mountPath: /run/dbus
@@ -144,6 +147,7 @@ data:
     frontend:
       themes: !include_dir_merge_named themes
     automation: !include automations.yaml
+    customize: !include customize.yaml
     http:
       use_x_forwarded_for: true
       trusted_proxies:
@@ -171,20 +175,20 @@ data:
         - 2a06:98c0::/29
         - 2c0f:f248::/32
 
-    cover:
-      - platform: cover_time_based_synced
-        devices:
-          my_room_cover_time_based:
-            name: Roleta Gabinet
-            travelling_time_up: 17
-            travelling_time_down: 16
-            close_switch_entity_id: switch.relay_08
-            open_switch_entity_id: switch.relay_07
-            send_stop_at_ends: False #optional
-            aliases: #optional
-              - gabinet_cover_time_based
-    modbus:
-      - name: modbus_hub
-        type: tcp
-        host: 10.0.50.7
-        port: 502
+    # cover:
+    #   - platform: cover_time_based_synced
+    #     devices:
+    #       my_room_cover_time_based:
+    #         name: Roleta Gabinet
+    #         travelling_time_up: 17
+    #         travelling_time_down: 16
+    #         close_switch_entity_id: switch.relay_08
+    #         open_switch_entity_id: switch.relay_07
+    #         send_stop_at_ends: False #optional
+    #         aliases: #optional
+    #           - gabinet_cover_time_based
+    # modbus:
+    #   - name: modbus_hub
+    #     type: tcp
+    #     host: 10.0.50.7
+    #     port: 502

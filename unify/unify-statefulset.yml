@@ -6,33 +6,14 @@ metadata:
   labels:
     name: home
 ---
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: gfs-ha-local-volume
-  namespace: unifi-ctrl
-  labels:
-    type: local
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 10Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/data/unifi-ctrl" # path to directory
----
-apiVersion: v1
 kind: PersistentVolumeClaim
+apiVersion: v1
 metadata:
   name: gfs-unifi-volume-claim
-  labels:
-    app: unifi-ctrl
-  namespace: unifi-ctrl
 spec:
-  storageClassName: manual
   accessModes:
-    - ReadWriteOnce #  must be the same as PersistentVolume
+  - ReadWriteOnce
+  storageClassName: local-storage
   resources:
     requests:
       storage: 10Gi
@@ -72,29 +53,25 @@ spec:
             - containerPort: 6789
               protocol: TCP
           volumeMounts:
-            - name: gfs-unifi-volume
-              mountPath: /unifi
+            - name: gfs-unifi-volume-claim
+              mountPath: /data/local/unifi
               subPath: unifi
-          volumes:
-            - name: gfs-unifi-volume
-              persistentVolumeClaim:
-              claimName: gfs-unifi-volume-claim
-  # volumeClaimTemplates:
-  # - metadata:
-  #     name: unifi-ctrl
-  #   spec:
-  #     storageClassName: "nfs-storageclass"
-  #     accessModes: ["ReadWriteOnce"]
-  #     resources:
-  #       requests:
-  #         storage: 10Gi
-
+  volumeClaimTemplates:
+    - metadata:
+        name: gfs-unifi-volume-claim
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi
 ---
 kind: Service
 apiVersion: v1
 metadata:
   name: lb-unifi
   namespace: unifi
+  # annotations:
+  #   metallb.universe.tf/allow-shared-ip: 'true'
 spec:
   ports:
     - name: '8080'
@@ -123,4 +100,23 @@ spec:
       targetPort: 3478
   selector:
     name: unifi-ctrl
-  type: ClusterIP
+  type: LoadBalancer
+  loadBalancerIP: 10.0.50.11
+---  
+kind: Service
+apiVersion: v1
+metadata:
+  name: lb-unifi-udp
+  # annotations:
+  #   metallb.universe.tf/allow-shared-ip: 'true'
+spec:
+  ports:
+    - name: '3478'
+      protocol: UDP
+      port: 3478
+      targetPort: 3478
+  selector:
+    name: unifi-ctrl
+  type: LoadBalancer
+  loadBalancerIP: 10.0.50.11
+  
