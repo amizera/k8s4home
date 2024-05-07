@@ -173,4 +173,3 @@ data:
     homeassistant:
       media_dirs:
         media: /media
-        recording: /media/recordings
