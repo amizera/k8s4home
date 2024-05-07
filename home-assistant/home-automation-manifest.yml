@@ -88,9 +88,12 @@ spec:
         - mountPath: /config/configuration.yaml
           subPath: configuration.yaml
           name: configmap-file
-        # - mountPath: /config/automations.yaml
-        #   subPath: automations.yaml
-        #   name: configmap-file
+        - mountPath: /config/automations.yaml
+          subPath: automations.yaml
+          name: gfs-ha-volume
+        - mountPath: /config/customize.yaml
+          subPath: customize.yaml
+          name: gfs-ha-volume
         - mountPath: /media
           name: gfs-ha-volume          
         # - mountPath: /run/dbus
@@ -114,22 +117,6 @@ spec:
       - name: configmap-file
         configMap:
           name: home-assistant-configmap
-      #- name: zigbee
-      #  hostPath:
-      #    path: /dev/zigbee1
-      #    type: FileOrCreate
-      #  hostPath:
-      #    path: /tmp/home-assistant
-      #    type: DirectoryOrCreate
-      # - name: d-bus
-      #   hostPath:
-      #     path: /run/dbus
-      #- name: zigbee
-      #  hostPath:
-      #    path: /dev/ttyACM0
-      #- name: cam
-      #  hostPath:
-      #    path: /dev/video0
 ---
 kind: ConfigMap
 apiVersion: v1
@@ -144,6 +131,7 @@ data:
     frontend:
       themes: !include_dir_merge_named themes
     automation: !include automations.yaml
+    customize: !include customize.yaml
     http:
       use_x_forwarded_for: true
       trusted_proxies:
@@ -170,6 +158,3 @@ data:
         - 2405:8100::/32
         - 2a06:98c0::/29
         - 2c0f:f248::/32
-    homeassistant:
-      media_dirs:
-        media: /media
