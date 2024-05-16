@@ -31,7 +31,7 @@ spec:
   capacity:
     storage: 10Gi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   hostPath:
     path: "/data/home-assistant" # path to directory
 ---
@@ -45,7 +45,7 @@ metadata:
 spec:
   storageClassName: manual
   accessModes:
-    - ReadWriteOnce #  must be the same as PersistentVolume
+    - ReadWriteMany #  must be the same as PersistentVolume
   resources:
     requests:
       storage: 8Gi
