@@ -31,7 +31,7 @@ spec:
   capacity:
     storage: 10Gi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   hostPath:
     path: "/data/home-assistant" # path to directory
 ---
@@ -45,7 +45,7 @@ metadata:
 spec:
   storageClassName: manual
   accessModes:
-    - ReadWriteOnce #  must be the same as PersistentVolume
+    - ReadWriteMany #  must be the same as PersistentVolume
   resources:
     requests:
       storage: 8Gi
@@ -87,7 +87,7 @@ spec:
           name: gfs-ha-volume
         - mountPath: /config/configuration.yaml
           subPath: configuration.yaml
-          name: configmap-file
+          name: gfs-ha-volume
         - mountPath: /config/automations.yaml
           subPath: automations.yaml
           name: gfs-ha-volume
@@ -95,7 +95,7 @@ spec:
           subPath: customize.yaml
           name: gfs-ha-volume
         - mountPath: /media
-          name: media-volume          
+          name: gfs-ha-volume          
         # - mountPath: /run/dbus
         #   name: d-bus
         #   readOnly: true
@@ -114,47 +114,51 @@ spec:
       - name: media-volume
         hostPath:
           path: /tmp/media
-      - name: configmap-file
-        configMap:
-          name: home-assistant-configmap
----
-kind: ConfigMap
-apiVersion: v1
-metadata:
-  name: home-assistant-configmap
-  namespace: home-assistant
-data:
-  known_devices.yaml: |
-  automations.yaml: |
-  configuration.yaml: |-
-    default_config:
-    frontend:
-      themes: !include_dir_merge_named themes
-    automation: !include automations.yaml
-    customize: !include customize.yaml
-    http:
-      use_x_forwarded_for: true
-      trusted_proxies:
-        - 10.0.0.0/8
-        - 173.245.48.0/20
-        - 103.21.244.0/22
-        - 103.22.200.0/22
-        - 103.31.4.0/22
-        - 141.101.64.0/18
-        - 108.162.192.0/18
-        - 190.93.240.0/20
-        - 188.114.96.0/20
-        - 197.234.240.0/22
-        - 198.41.128.0/17
-        - 162.158.0.0/15
-        - 104.16.0.0/13
-        - 104.24.0.0/14
-        - 172.64.0.0/13
-        - 131.0.72.0/22
-        - 2400:cb00::/32
-        - 2606:4700::/32
-        - 2803:f800::/32
-        - 2405:b500::/32
-        - 2405:8100::/32
-        - 2a06:98c0::/29
-        - 2c0f:f248::/32
+      # - name: config_yml
+      #   hostPath:
+      #     path: "config/configuration"
+
+#       - name: configmap-file
+#         configMap:
+#           name: home-assistant-configmap
+# ---
+# kind: ConfigMap
+# apiVersion: v1
+# metadata:
+#   name: home-assistant-configmap
+#   namespace: home-assistant
+# data:
+#   known_devices.yaml: |
+#   automations.yaml: |
+#   configuration.yaml: |-
+#     default_config:
+#     frontend:
+#       themes: !include_dir_merge_named themes
+#     automation: !include automations.yaml
+#     customize: !include customize.yaml
+#     http:
+#       use_x_forwarded_for: true
+#       trusted_proxies:
+#         - 10.0.0.0/8
+#         - 173.245.48.0/20
+#         - 103.21.244.0/22
+#         - 103.22.200.0/22
+#         - 103.31.4.0/22
+#         - 141.101.64.0/18
+#         - 108.162.192.0/18
+#         - 190.93.240.0/20
+#         - 188.114.96.0/20
+#         - 197.234.240.0/22
+#         - 198.41.128.0/17
+#         - 162.158.0.0/15
+#         - 104.16.0.0/13
+#         - 104.24.0.0/14
+#         - 172.64.0.0/13
+#         - 131.0.72.0/22
+#         - 2400:cb00::/32
+#         - 2606:4700::/32
+#         - 2803:f800::/32
+#         - 2405:b500::/32
+#         - 2405:8100::/32
+#         - 2a06:98c0::/29
+#         - 2c0f:f248::/32
