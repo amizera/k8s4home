@@ -129,7 +129,7 @@ metadata:
   namespace: home-assistant
 data:
   known_devices.yaml: |
-  automations.yaml: |-
+  automations.yaml: |
     - id: '1713609938281'
       alias: Światło_Serwerownia_Ruch
       description: ''
@@ -206,34 +206,81 @@ data:
         type: close
       mode: single
     - id: '1714469574083'
-    alias: Dzwonek_new
-    description: ''
-    trigger:
-    - device_id: 2e953f3699b8e166c5c96b31c076115e
-      domain: zha
-      platform: device
-      type: remote_button_short_press
-      subtype: turn_on
-    condition: []
-    action:
-    - service: media_player.play_media
-      target:
-        entity_id: media_player.sonos_roam
-      data:
-        media_content_id: media-source://media_source/media/media/Ding-dong.wav
-        media_content_type: audio/x-wav
-      metadata:
-        title: Ding-dong.wav
-        thumbnail:
-        media_class: music
-        children_media_class:
-        navigateIds:
-        - {}
-        - media_content_type: app
-          media_content_id: media-source://media_source
-        - media_content_type: ''
-          media_content_id: media-source://media_source/media/media
-    mode: single
+      alias: Dzwonek_new
+      description: ''
+      trigger:
+      - device_id: 2e953f3699b8e166c5c96b31c076115e
+        domain: zha
+        platform: device
+        type: remote_button_short_press
+        subtype: turn_on
+      condition: []
+      action:
+      - service: media_player.play_media
+        target:
+          entity_id: media_player.sonos_roam
+        data:
+          media_content_id: media-source://media_source/media/media/Ding-dong.wav
+          media_content_type: audio/x-wav
+        metadata:
+          title: Ding-dong.wav
+          thumbnail:
+          media_class: music
+          children_media_class:
+          navigateIds:
+          - {}
+          - media_content_type: app
+            media_content_id: media-source://media_source
+          - media_content_type: ''
+            media_content_id: media-source://media_source/media/media
+      mode: single
+    - id: '1715569574001'
+      alias: Roleta_Gabinet_OnOff_01
+      description: "sterowanie roletami OnOff_01"
+      use_blueprint:
+        path: EPMatt/ikea_e1743.yaml
+        input:
+          integration: Zigbee2MQTT
+          controller_entity: sensor.onoff_01_mqtt_action
+          helper_last_controller_event: input_text.lastcontrollerevent
+          action_button_up_long:
+            - service: cover.open_cover
+              metadata: {}
+              data: {}
+              target:
+                entity_id: cover.boneio_c_07_21a5c4_cover_01
+          action_button_up_short:
+            - service: cover.stop_cover
+              metadata: {}
+              data: {}
+              target:
+                entity_id: cover.boneio_c_07_21a5c4_cover_01
+          action_button_up_double:
+            - service: cover.set_cover_position
+              metadata: {}
+              data:
+                position: 66
+              target:
+                entity_id: cover.boneio_c_07_21a5c4_cover_01
+          action_button_down_short:
+            - service: cover.stop_cover
+              metadata: {}
+              data: {}
+              target:
+                entity_id: cover.boneio_c_07_21a5c4_cover_01
+          action_button_down_long:
+            - service: cover.close_cover
+              metadata: {}
+              data: {}
+              target:
+                entity_id: cover.boneio_c_07_21a5c4_cover_01
+          action_button_down_double:
+            - service: cover.set_cover_position
+              metadata: {}
+              data:
+                position: 33
+              target:
+                entity_id: cover.boneio_c_07_21a5c4_cover_01
   configuration.yaml: |-
     default_config:
     frontend:
