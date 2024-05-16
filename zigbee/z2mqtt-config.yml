@@ -43,8 +43,8 @@ data:
     device_options:
       legacy: false
     ## Map devices to persistent /data directory
-    devices: /data/devices.yaml
-    groups: /data/groups.yaml
+    # devices: /app/data/devices.yaml
+    # groups: /app/data/groups.yaml
   
   devices.yaml: |
     '0x842e14fffe15569e':

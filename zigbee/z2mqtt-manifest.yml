@@ -85,12 +85,12 @@ spec:
             protocol: TCP
         volumeMounts:
         - name: gfs-z2mqtt-volume
-          mountPath: /data
+          mountPath: /app/data
         - name: z2mqtt-config
-          mountPath: /app/configuration.yaml
+          mountPath: /app/data/configuration.yaml
           subPath: configuration.yaml
         - name: z2mqtt-config
-          mountPath: /app/devices.yaml
+          mountPath: /app/data/devices.yaml
           subPath: devices.yaml 
         - name: z2mqtt-udev
           mountPath: /run/udev
