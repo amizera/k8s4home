@@ -45,3 +45,7 @@ data:
     ## Map devices to persistent /data directory
     devices: /data/devices.yaml
     groups: /data/groups.yaml
+  
+  devices.yaml: |
+    '0x842e14fffe15569e':
+      friendly_name: 'OnOff_01'

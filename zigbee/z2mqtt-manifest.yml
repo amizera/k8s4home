@@ -89,6 +89,9 @@ spec:
         - name: z2mqtt-config
           mountPath: /app/configuration.yaml
           subPath: configuration.yaml
+        - name: z2mqtt-config
+          mountPath: /app/devices.yaml
+          subPath: devices.yaml 
         - name: z2mqtt-udev
           mountPath: /run/udev
         # - mountPath: /dev/ttyACM0
