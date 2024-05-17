@@ -8,7 +8,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: z2mqtt-config
-  #namespace: home-assistant
+  namespace: home-assistant
   labels:
     app: z2mqtt
 data:
@@ -28,7 +28,7 @@ data:
       port: tcp://10.0.50.5:6638
     # Enable the Zigbee2MQTT frontend
     frontend:
-      port: 8080
+      port: 8888
     # Let Zigbee2MQTT generate a new network key on first start
     advanced:
       homeassistant_legacy_entity_attributes: false
@@ -42,6 +42,8 @@ data:
       - file
     device_options:
       legacy: false
+    ota:
+      ikea_ota_use_test_url: true
     ## Map devices to persistent /data directory
     # devices: /app/data/devices.yaml
     # groups: /app/data/groups.yaml
