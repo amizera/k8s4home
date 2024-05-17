@@ -76,7 +76,7 @@ spec:
           - name: TZ
             value: Europe/Warsaw
           - name: "ZIGBEE2MQTT_DATA"
-            value: "/data"
+            value: "/app/data"
           - name: ZIGBEE2MQTT_CONFIG_MQTT_SERVER # optional - can also be configured in the configuration.yaml in the configmap
             value: "mqtt://10.0.50.11:31883"
         ports:
@@ -85,13 +85,13 @@ spec:
             protocol: TCP
         volumeMounts:
         - name: gfs-z2mqtt-volume
-          mountPath: /data
+          mountPath: /app/data
         - name: z2mqtt-config
-          mountPath: /data/configuration.yaml
+          mountPath: /app/data/configuration.yaml
           subPath: configuration.yaml
-        - name: z2mqtt-config
-          mountPath: /data/devices.yaml
-          subPath: devices.yaml 
+        # - name: z2mqtt-config
+        #   mountPath: /app/data/devices.yaml
+        #   subPath: devices.yaml 
         - name: z2mqtt-udev
           mountPath: /run/udev
         # - mountPath: /dev/ttyACM0
