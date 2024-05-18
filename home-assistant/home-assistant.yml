@@ -222,7 +222,7 @@ data:
         data:
           announce: true
           media_content_type: audio/x-wav
-          media_content_id: media-source://media_source/media/media/Ding-dong.wav
+          media_content_id: media-source://media_source/media/Ding-dong.wav
           extra:
             volume: 99
       mode: single
