@@ -240,39 +240,41 @@ data:
               metadata: {}
               data: {}
               target:
-                entity_id: cover.boneio_c_07_21a5c4_cover_01
+                entity_id: cover.boneio_c_07_21a5c4_cover_04
           action_button_up_short:
             - service: cover.stop_cover
               metadata: {}
               data: {}
               target:
-                entity_id: cover.boneio_c_07_21a5c4_cover_01
+                entity_id: cover.boneio_c_07_21a5c4_cover_04
           action_button_up_double:
             - service: cover.set_cover_position
               metadata: {}
               data:
                 position: 66
               target:
-                entity_id: cover.boneio_c_07_21a5c4_cover_01
+                entity_id: cover.boneio_c_07_21a5c4_cover_04
           action_button_down_short:
             - service: cover.stop_cover
               metadata: {}
               data: {}
               target:
-                entity_id: cover.boneio_c_07_21a5c4_cover_01
+                entity_id: cover.boneio_c_07_21a5c4_cover_04
           action_button_down_long:
             - service: cover.close_cover
               metadata: {}
               data: {}
               target:
-                entity_id: cover.boneio_c_07_21a5c4_cover_01
+                entity_id: cover.boneio_c_07_21a5c4_cover_04
           action_button_down_double:
             - service: cover.set_cover_position
               metadata: {}
               data:
                 position: 33
               target:
-                entity_id: cover.boneio_c_07_21a5c4_cover_01
+                entity_id: cover.boneio_c_07_21a5c4_cover_04
+          button_up_double_press: true
+          button_down_double_press: true  
   configuration.yaml: |-
     default_config:
     frontend:
