@@ -206,7 +206,7 @@ data:
         type: close
       mode: single
     - id: '1714469574083'
-      alias: Dzwonek_new
+      alias: Dzwonek
       description: ''
       trigger:
       - device_id: 2e953f3699b8e166c5c96b31c076115e
@@ -220,19 +220,11 @@ data:
         target:
           entity_id: media_player.sonos_roam
         data:
-          media_content_id: media-source://media_source/media/media/Ding-dong.wav
+          announce: true
           media_content_type: audio/x-wav
-        metadata:
-          title: Ding-dong.wav
-          thumbnail:
-          media_class: music
-          children_media_class:
-          navigateIds:
-          - {}
-          - media_content_type: app
-            media_content_id: media-source://media_source
-          - media_content_type: ''
-            media_content_id: media-source://media_source/media/media
+          media_content_id: media-source://media_source/media/media/Ding-dong.wav
+          extra:
+            volume: 99
       mode: single
     - id: '1715569574001'
       alias: Roleta_Gabinet_OnOff_01

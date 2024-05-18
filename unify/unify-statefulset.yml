@@ -6,17 +6,32 @@ metadata:
   labels:
     name: home
 ---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: gfs-unifi-local-volume
+  namespace: unifi
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/unifi"
+---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: gfs-unifi-volume-claim
+  namespace: unifi
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   storageClassName: local-storage
   resources:
     requests:
-      storage: 10Gi
+      storage: 5Gi
 ---
 kind: StatefulSet
 apiVersion: apps/v1
@@ -53,17 +68,20 @@ spec:
             - containerPort: 6789
               protocol: TCP
           volumeMounts:
-            - name: gfs-unifi-volume-claim
-              mountPath: /data/local/unifi
-              subPath: unifi
-  volumeClaimTemplates:
-    - metadata:
-        name: gfs-unifi-volume-claim
-      spec:
-        accessModes: ["ReadWriteOnce"]
-        resources:
-          requests:
-            storage: 10Gi
+            - name: gfs-unifi-volume
+              mountPath: /config
+      volumes:
+        - name: gfs-unifi-volume
+          persistentVolumeClaim:
+            claimName: gfs-unifi-volume-claim
+  # volumeClaimTemplates:
+  #   - metadata:
+  #       name: gfs-unifi-volume-claim
+  #     spec:
+  #       accessModes: ["ReadWriteOnce"]
+  #       resources:
+  #         requests:
+  #           storage: 5Gi
 ---
 kind: Service
 apiVersion: v1
