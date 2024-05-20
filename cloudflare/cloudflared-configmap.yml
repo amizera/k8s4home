@@ -33,15 +33,15 @@ data:
     # E.g. `cloudflared tunnel route dns example-tunnel tunnel.example.com`.
     ingress:
     # The first rule proxies traffic to the httpbin sample Service defined in app.yaml
-    - hostname: cam.48340.xyz
-      service: http://restream.video.svc.cluster.local
+    # - hostname: cam.48340.xyz
+    #   service: http://restream.video.svc.cluster.local
     - hostname: ha.48340.xyz
       service: http://home-assistant.home-assistant.svc.cluster.local
-    - hostname: k3s.48340.xyz
-      service: https://kubernetes-dashboard.kubernetes-dashboard.svc.cluster.local
+    # - hostname: k3s.48340.xyz
+    #   service: https://kubernetes-dashboard.kubernetes-dashboard.svc.cluster.local
 
-    - hostname: hello.48340.xyz
-      service: hello_world
+    # - hostname: hello.48340.xyz
+    #   service: hello_world
     # - hostname: z2mqtt.48340.xyz
     #   service: http://z2mqtt.home-assistant.svc.cluster.local:31080
 
