@@ -183,8 +183,7 @@ data:
             send_stop_at_ends: False #optional
             aliases: #optional
               - gabinet_cover_time_based
-    modbus:
-      - name: modbus_hub
-        type: tcp
-        host: 10.0.50.7
-        port: 502
+
+    sensor:
+      - platform: hydro_imgw
+        station_id: "150170070"
