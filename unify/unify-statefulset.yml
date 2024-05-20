@@ -119,7 +119,7 @@ spec:
   selector:
     name: unifi-ctrl
   type: LoadBalancer
-  loadBalancerIP: 10.0.50.11
+  # loadBalancerIP: 10.0.50.128
 ---  
 kind: Service
 apiVersion: v1
@@ -136,5 +136,5 @@ spec:
   selector:
     name: unifi-ctrl
   type: LoadBalancer
-  loadBalancerIP: 10.0.50.11
+  # loadBalancerIP: 10.0.50.128
   

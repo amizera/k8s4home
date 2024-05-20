@@ -1,0 +1,21 @@
+---
+  # Metallb address pool
+  apiVersion: metallb.io/v1beta1
+  kind: IPAddressPool
+  metadata:
+    name: gnetk8s-pool
+    namespace: metallb
+  spec:
+    addresses:
+    - 10.0.51.100-10.0.51.250
+
+---
+# L2 configuration
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: k8s-l2-net
+  namespace: metallb
+spec:
+  ipAddressPools:
+  - gnetk8s-pool

@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-helloword
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
+  namespace: helloword
+spec:
+  rules:
+    - host: api.nolifelover.example
+      http:
+        paths:
+          - backend:
+              service:
+                port:
+                  number: 8080
+                name: helloworld-http
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - api.nolifelover.example
+      secretName: helloworld-http-tls
+  ingressClassName: traefik
