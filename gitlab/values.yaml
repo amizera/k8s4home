@@ -1,0 +1,22 @@
+gitlab:
+  gitaly:
+    persistence:
+      storageClass: longhorn
+      size: 20Gi
+postgresql:
+  persistence:
+    storageClass: longhorn
+    size: 8Gi
+minio:
+  persistence:
+    storageClass: longhorn
+    size: 10Gi
+prometheus:
+  persistence:
+    storageClass: longhorn
+    size: 10Gi
+redis:
+  master:
+    persistence:
+      storageClass: longhorn
+      size: 5Gi

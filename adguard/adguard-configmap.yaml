@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: adguard-config
+  namespace: adguard
+data:
+  AdGuardHome.yaml: |
+    bind_host: 0.0.0.0
+    bind_port: 3000
+    auth_name: "g3n3zyp"
+    auth_pass: "$2y$10$qW/fY.bfpl4imLewqIoc5.aWUB5rnSbvO3Tyl3zE5OPxK7w3RtcvW"
+    language: "en"
+    rlimit_nofile: 0
+    rlimit_nproc: 0
+    log_file: ""
+    log_syslog: false
+    log_syslog_srv: ""
+    pid_file: ""
+    verbose: false
