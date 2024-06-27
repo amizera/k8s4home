@@ -40,8 +40,8 @@ data:
     # - hostname: k3s.48340.xyz
     #   service: https://kubernetes-dashboard.kubernetes-dashboard.svc.cluster.local
 
-    # - hostname: hello.48340.xyz
-    #   service: hello_world
+    - hostname: 48340.xyz
+      service: http://wordpress.default.svc.cluster.local
     # - hostname: z2mqtt.48340.xyz
     #   service: http://z2mqtt.home-assistant.svc.cluster.local:31080
 

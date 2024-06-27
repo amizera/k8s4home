@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wordpress-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
+spec:
+  rules:
+    - host: 48340.xyz
+      http:
+        paths:
+          - backend:
+              service:
+                port:
+                  number: 80
+                name: wordpress
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - 48340.xyz
+      secretName: wordpress-tls
+  ingressClassName: traefik
