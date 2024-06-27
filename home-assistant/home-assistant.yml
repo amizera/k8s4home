@@ -333,3 +333,5 @@ data:
         - 2c0f:f248::/32
     homeassistant:
       customize: !include customize.yaml
+    config:
+      scene: !include scenes.yaml
