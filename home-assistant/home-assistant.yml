@@ -116,6 +116,9 @@ spec:
         - mountPath: /config/automations.yaml
           subPath: automations.yaml
           name: configmap-file
+        - mountPath: /config/scenes.yaml
+          subPath: scenes.yaml
+          name: configmap-file
         - mountPath: /config/customize.yaml
           subPath: customize.yaml
           name: gfs-ha-volume
@@ -154,6 +157,265 @@ metadata:
   namespace: home-assistant
 data:
   known_devices.yaml: |
+  scenes.yaml: |
+    - id: '1719479829695'
+      name: Rolety_25prod
+      entities:
+        cover.boneio_c_07_21a5c4_cover_07:
+          current_position: 25
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Fix
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_cover_04:
+          current_position: 25
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Gabinet
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_cover_03:
+          current_position: 25
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Kuchnia_Drzwi
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_cover_05:
+          current_position: 25
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Kuchnia_Okno
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_cover_02:
+          current_position: 25
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Łazienka_dół
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_cover_06:
+          current_position: 25
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Pralnia
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_cover_08:
+          current_position: 25
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Salon_Drzwi
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_cover_10:
+          current_position: 10
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Salon_HS_Drzwi
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_cover_09:
+          current_position: 25
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Salon_HS_Fix
+          supported_features: 15
+          state: open
+      icon: mdi:window-shutter-settings
+      metadata:
+        cover.boneio_c_07_21a5c4_cover_07:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_cover_04:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_cover_03:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_cover_05:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_cover_02:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_cover_06:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_cover_08:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_cover_10:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_cover_09:
+          entity_only: true
+    - id: '1719482902626'
+      name: R55pro
+      entities:
+        cover.boneio_c_07_21a5c4_cover_07:
+          current_position: 55
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Fix
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_cover_04:
+          current_position: 55
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Gabinet
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_cover_03:
+          current_position: 55
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Kuchnia_Drzwi
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_cover_05:
+          current_position: 55
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Kuchnia_Okno
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_cover_02:
+          current_position: 55
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Łazienka_dół
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_cover_06:
+          current_position: 55
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Pralnia
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_cover_08:
+          current_position: 55
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Salon_Drzwi
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_cover_10:
+          current_position: 50
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Salon_HS_Drzwi
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_cover_09:
+          current_position: 55
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Salon_HS_Fix
+          supported_features: 15
+          state: open
+      icon: mdi:window-shutter-settings
+      metadata:
+        cover.boneio_c_07_21a5c4_cover_07:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_cover_04:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_cover_03:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_cover_05:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_cover_02:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_cover_06:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_cover_08:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_cover_10:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_cover_09:
+          entity_only: true
+    - id: '1719483902637'
+      name: R100pro
+      entities:
+        cover.boneio_c_07_21a5c4_cover_07:
+          current_position: 100
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Fix
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_cover_04:
+          current_position: 100
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Gabinet
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_cover_03:
+          current_position: 100
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Kuchnia_Drzwi
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_cover_05:
+          current_position: 100
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Kuchnia_Okno
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_cover_02:
+          current_position: 100
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Łazienka_dół
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_cover_06:
+          current_position: 100
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Pralnia
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_cover_08:
+          current_position: 100
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Salon_Drzwi
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_cover_10:
+          current_position: 100
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Salon_HS_Drzwi
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_cover_09:
+          current_position: 100
+          assumed_state: true
+          device_class: blind
+          friendly_name: Roleta_Salon_HS_Fix
+          supported_features: 15
+          state: open
+      icon: mdi:window-shutter-settings
+      metadata:
+        cover.boneio_c_07_21a5c4_cover_07:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_cover_04:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_cover_03:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_cover_05:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_cover_02:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_cover_06:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_cover_08:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_cover_10:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_cover_09:
+          entity_only: true
   automations.yaml: |
     - id: '1713609938281'
       alias: Światło_Serwerownia_Ruch
@@ -305,6 +567,7 @@ data:
     frontend:
       themes: !include_dir_merge_named themes
     automation: !include automations.yaml
+    scene: !include scenes.yaml
     http:
       use_x_forwarded_for: true
       trusted_proxies:
@@ -333,5 +596,4 @@ data:
         - 2c0f:f248::/32
     homeassistant:
       customize: !include customize.yaml
-    config:
-      scene: !include scenes.yaml
+      
