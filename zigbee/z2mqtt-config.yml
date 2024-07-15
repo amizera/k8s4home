@@ -21,7 +21,7 @@ data:
     # Docker-Compose makes the MQTT-Server available using "mqtt" hostname
     # MQTT server URL
     mqtt:
-      base_topic: homeassistant
+      #base_topic: homeassistant
       server: "mqtt://10.0.50.11:31883" # mqtt://<name_of_pod>.<name_of_namespace> (mosquitto)
     # Zigbee Adapter path
     serial:

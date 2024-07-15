@@ -7,13 +7,13 @@ metadata:
 spec:
   selector:
     app: z2mqtt
-  type: NodePort
+  type: LoadBalancer
   ports:
     - name: z2mqtt
       port: 8888
-      targetPort: 8888
-      nodePort: 31888
-      protocol: TCP
+      # targetPort: 8888
+      # nodePort: 31888
+      # protocol: TCP
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -89,9 +89,9 @@ spec:
         - name: z2mqtt-config
           mountPath: /app/data/configuration.yaml
           subPath: configuration.yaml
-        # - name: z2mqtt-config
-        #   mountPath: /app/data/devices.yaml
-        #   subPath: devices.yaml 
+        - name: z2mqtt-config
+          mountPath: /app/data/devices.yaml
+          subPath: devices.yaml 
         - name: z2mqtt-udev
           mountPath: /run/udev
         # - mountPath: /dev/ttyACM0
