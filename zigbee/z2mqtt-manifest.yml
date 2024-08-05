@@ -89,9 +89,11 @@ spec:
         - name: z2mqtt-config
           mountPath: /app/data/configuration.yaml
           subPath: configuration.yaml
-        - name: z2mqtt-config
-          mountPath: /app/data/devices.yaml
-          subPath: devices.yaml 
+        # - name: gfs-z2mqtt-volume
+        #   mountPath: /app/data/devices_rw.yaml
+        # - name: z2mqtt-config
+        #   mountPath: /app/data/devices.yaml
+        # subPath: devices.yaml 
         - name: z2mqtt-udev
           mountPath: /run/udev
         # - mountPath: /dev/ttyACM0

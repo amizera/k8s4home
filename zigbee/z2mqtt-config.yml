@@ -45,9 +45,10 @@ data:
     ota:
       ikea_ota_use_test_url: true
     ## Map devices to persistent /data directory
-    devices: /app/data/devices.yaml
+    devices: /app/data/devices.yaml 
+
     groups: /app/data/groups.yaml
   
-  devices.yaml: |
-    '0x842e14fffe15569e':
-      friendly_name: 'OnOff_01'
+  # devices.yaml: |
+  #   '0x842e14fffe15569e':
+  #     friendly_name: 'OnOff_01'
