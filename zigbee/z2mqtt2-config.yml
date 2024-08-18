@@ -31,7 +31,7 @@ data:
       # Location of SLZB-06M
       port: tcp://10.0.50.4:6638
       baudrate: 115200
-      adapter: ezsp
+      adapter: ember
     # Disable green led?
       disable_led: false
     
