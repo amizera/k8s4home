@@ -3,68 +3,82 @@ apiVersion: v1
 kind: Service
 metadata:
   namespace: home-assistant
-  name: z2mqtt
+  name: z2mqtt2
 spec:
   selector:
-    app: z2mqtt
+    app: z2mqtt2
   type: LoadBalancer
   ports:
-    - name: z2mqtt
+    - name: z2mqtt2
       port: 8888
       # targetPort: 8888
       # nodePort: 31888
       # protocol: TCP
 ---
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: gfs-z2mqtt-local-volume
-  namespace: home-assistant
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 1Gi
-  accessModes:
-    - ReadWriteMany
-  hostPath:
-    path: "/data/zigbee"
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: gfs-z2mqtt2-local-volume
+#   namespace: home-assistant
+# spec:
+#   storageClassName: longhorn
+#   capacity:
+#     storage: 1Gi
+#   accessModes:
+#     - ReadWriteMany
+#   hostPath:
+#     path: "/data/zigbee2"
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   namespace: home-assistant
+#   name: gfs-z2mqtt2-volume-claim
+#   labels:
+#     app: z2mqtt2
+# spec:
+#   storageClassName: manual
+#   accessModes:
+#     - ReadWriteMany
+#   resources:
+#     requests:
+#       storage: 500Mi
+# ---
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  name: gfs-z2mqtt2-volume-claim
   namespace: home-assistant
-  name: gfs-z2mqtt-volume-claim
-  labels:
-    app: z2mqtt
 spec:
-  storageClassName: manual
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
+  storageClassName: longhorn
   resources:
     requests:
-      storage: 500Mi
+      storage: 1Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: home-assistant
-  name: z2mqtt
+  name: z2mqtt2
   labels:
-    app: z2mqtt
+    app: z2mqtt2
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: z2mqtt
+      app: z2mqtt2
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: z2mqtt
+        app: z2mqtt2
     spec:
       containers:
-      - name: z2mqtt
+      - name: z2mqtt2
         #image: alpine:latest
         #command:
         #  - /bin/sh
@@ -84,17 +98,17 @@ spec:
             containerPort: 8888
             protocol: TCP
         volumeMounts:
-        - name: gfs-z2mqtt-volume
+        - name: gfs-z2mqtt2-volume
           mountPath: /app/data
-        - name: z2mqtt-config
+        - name: z2mqtt2-config
           mountPath: /app/data/configuration.yaml
           subPath: configuration.yaml
-        # - name: gfs-z2mqtt-volume
+        # - name: gfs-z2mqtt2-volume
         #   mountPath: /app/data/devices_rw.yaml
-        # - name: z2mqtt-config
+        # - name: z2mqtt2-config
         #   mountPath: /app/data/devices.yaml
         # subPath: devices.yaml 
-        - name: z2mqtt-udev
+        - name: z2mqtt2-udev
           mountPath: /run/udev
         # - mountPath: /dev/ttyACM0
         #   name: cc2351
@@ -102,16 +116,16 @@ spec:
         #   privileged: true
       hostNetwork: true
       volumes:
-        - name: gfs-z2mqtt-volume
+        - name: gfs-z2mqtt2-volume
           persistentVolumeClaim:
-            claimName: gfs-z2mqtt-volume-claim
-        - name: z2mqtt-udev
+            claimName: gfs-z2mqtt2-volume-claim
+        - name: z2mqtt2-udev
           hostPath:
             path: /run/udev
         # - name: cc2351
         #   hostPath:
         #     path: /dev/ttyACM0
-        - name: z2mqtt-config
+        - name: z2mqtt2-config
           configMap:
-            name: z2mqtt-config
+            name: z2mqtt2-config
       
