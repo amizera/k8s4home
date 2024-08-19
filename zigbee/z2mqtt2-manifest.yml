@@ -77,13 +77,9 @@ spec:
       labels:
         app: z2mqtt2
     spec:
+      hostNetwork: true
       containers:
       - name: z2mqtt2
-        #image: alpine:latest
-        #command:
-        #  - /bin/sh
-        #  - "-c"
-        #  - "sleep 60m"
         image: koenkk/zigbee2mqtt:latest
         imagePullPolicy: Always
         env:
@@ -94,38 +90,28 @@ spec:
           - name: ZIGBEE2MQTT_CONFIG_MQTT_SERVER # optional - can also be configured in the configuration.yaml in the configmap
             value: "mqtt://10.0.50.11:31883"
         ports:
-          - name: http
-            containerPort: 8888
-            protocol: TCP
+        - name: http
+          containerPort: 8888
+          protocol: TCP
         volumeMounts:
         - name: gfs-z2mqtt2-volume
           mountPath: /app/data
         - name: z2mqtt2-config
           mountPath: /app/data/configuration.yaml
           subPath: configuration.yaml
-        # - name: gfs-z2mqtt2-volume
-        #   mountPath: /app/data/devices_rw.yaml
-        # - name: z2mqtt2-config
-        #   mountPath: /app/data/devices.yaml
-        # subPath: devices.yaml 
         - name: z2mqtt2-udev
           mountPath: /run/udev
-        # - mountPath: /dev/ttyACM0
-        #   name: cc2351
-        # securityContext:
-        #   privileged: true
-      hostNetwork: true
       volumes:
-        - name: gfs-z2mqtt2-volume
-          persistentVolumeClaim:
-            claimName: gfs-z2mqtt2-volume-claim
-        - name: z2mqtt2-udev
-          hostPath:
-            path: /run/udev
-        # - name: cc2351
-        #   hostPath:
-        #     path: /dev/ttyACM0
-        - name: z2mqtt2-config
-          configMap:
-            name: z2mqtt2-config
-      
+      - name: gfs-z2mqtt2-volume
+        persistentVolumeClaim:
+          claimName: gfs-z2mqtt2-volume-claim
+      - name: z2mqtt2-udev
+        hostPath:
+          path: /run/udev
+      # - name: cc2351
+      #   hostPath:
+      #     path: /dev/ttyACM0
+      - name: z2mqtt2-config
+        configMap:
+          name: z2mqtt2-config
+  
