@@ -70,7 +70,7 @@ spec:
         #  - /bin/sh
         #  - "-c"
         #  - "sleep 60m"
-        image: koenkk/zigbee2mqtt:latest
+        image: koenkk/zigbee2mqtt:1.39.0
         imagePullPolicy: Always
         env:
           - name: TZ
@@ -91,9 +91,9 @@ spec:
           subPath: configuration.yaml
         # - name: gfs-z2mqtt-volume
         #   mountPath: /app/data/devices_rw.yaml
-        # - name: z2mqtt-config
-        #   mountPath: /app/data/devices.yaml
-        # subPath: devices.yaml 
+        - name: z2mqtt-config
+          mountPath: /app/data/secret.yaml
+          subPath: secret.yaml 
         - name: z2mqtt-udev
           mountPath: /run/udev
         # - mountPath: /dev/ttyACM0
