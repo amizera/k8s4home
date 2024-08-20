@@ -106,10 +106,10 @@ spec:
             value:  "false"
           - name: "ZIGBEE2MQTT_CONFIG_FRONTEND_PORT"
             value:  "8888"
-          - name: "ZIGBEE2MQTT_CONFIG_DEVICES"
-            value:  '/app/data/devices.yaml'                      
-          - name: "ZIGBEE2MQTT_CONFIG_GROUPS"
-            value:  "/app/data/groups.yaml"
+          # - name: "ZIGBEE2MQTT_CONFIG_DEVICES"
+          #   value:  '/app/data/devices.yaml'                      
+          # - name: "ZIGBEE2MQTT_CONFIG_GROUPS"
+          #   value:  "/app/data/groups.yaml"
           - name: "ZIGBEE2MQTT_CONFIG_OTA_IKEA_OTA_USE_TEST_URL"
             value:  "true"
           - name: "ZIGBEE2MQTT_DEVICE_OPTIONS_LEGACY"
@@ -141,9 +141,9 @@ spec:
         volumeMounts:
         - name: longhorn-z2mqtt-02-volume
           mountPath: /app/data
-        - name: z2mqtt-02-config
-          mountPath: /app/data/configuration.yaml
-          subPath: configuration.yaml
+        # - name: z2mqtt-02-config
+        #   mountPath: /app/data/configuration.yaml
+        #   subPath: configuration.yaml
         # - name: gfs-z2mqtt-02-volume
         #   mountPath: /app/data/devices_rw.yaml
         # - name: z2mqtt-02-config
@@ -157,16 +157,16 @@ spec:
         #   privileged: true
       hostNetwork: true
       volumes:
-        - name: gfs-z2mqtt-02-volume
+        - name: longhorn-z2mqtt-02-volume
           persistentVolumeClaim:
-            claimName: gfs-z2mqtt-02-volume-claim
+            claimName: longhorn-z2mqtt-02-volume-claim
         - name: z2mqtt-02-udev
           hostPath:
             path: /run/udev
         # - name: cc2351
         #   hostPath:
         #     path: /dev/ttyACM0
-        - name: z2mqtt-02-config
-          configMap:
-            name: z2mqtt-02-config
+        # - name: z2mqtt-02-config
+        #   configMap:
+        #     name: z2mqtt-02-config
       
