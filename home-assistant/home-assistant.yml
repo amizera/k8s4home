@@ -92,6 +92,13 @@ spec:
       labels:
         app: home-assistant
     spec:
+      initContainers:
+      - name: mk-directory
+        image: busybox:1.35
+        command: ['sh', '-c', 'sleep 5 && echo "creating dir" && mkdir -p /config/automations']
+        volumeMounts:
+        - mountPath: /config
+          name: gfs-ha-volume
       containers:
       - name: bluez
         image: ghcr.io/mysticrenji/bluez-service:v1.0.0
@@ -113,8 +120,8 @@ spec:
         - mountPath: /config/configuration.yaml
           subPath: configuration.yaml
           name:  configmap-file
-        - mountPath: /config/automations.yaml
-          subPath: automations.yaml
+        - mountPath: /config/automations/auto-lights.yaml
+          subPath: auto-lights.yaml
           name: configmap-file
         - mountPath: /config/scenes.yaml
           subPath: scenes.yaml
@@ -157,9 +164,8 @@ metadata:
   namespace: home-assistant
 data:
   known_devices.yaml: |
-  scenes.yaml: |
-    - id: '1719479829695'
-      name: Rolety_25prod
+  scenes_k8s.yaml: |
+    - name: Rolety_25prod
       entities:
         cover.boneio_c_07_21a5c4_cover_07:
           current_position: 25
@@ -244,8 +250,7 @@ data:
           entity_only: true
         cover.boneio_c_07_21a5c4_cover_09:
           entity_only: true
-    - id: '1719482902626'
-      name: R55pro
+    - name: R55pro
       entities:
         cover.boneio_c_07_21a5c4_cover_07:
           current_position: 55
@@ -330,8 +335,7 @@ data:
           entity_only: true
         cover.boneio_c_07_21a5c4_cover_09:
           entity_only: true
-    - id: '1719483902637'
-      name: R100pro
+    - name: R100pro
       entities:
         cover.boneio_c_07_21a5c4_cover_07:
           current_position: 100
@@ -416,8 +420,7 @@ data:
           entity_only: true
         cover.boneio_c_07_21a5c4_cover_09:
           entity_only: true
-    - id: '1719483902656'
-      name: R0pro
+    - name: R0pro
       entities:
         cover.boneio_c_07_21a5c4_cover_07:
           current_position: 0
@@ -502,18 +505,28 @@ data:
           entity_only: true
         cover.boneio_c_07_21a5c4_cover_09:
           entity_only: true  
-  automations.yaml: |
-    - id: '1713609938281'
-      alias: Światło_Serwerownia_Ruch
-      description: ''
+  auto-lights.yaml: |
+    - alias: "RoletyWszystkie_OnOff_02"
+      description: "Sterowanie wszystkimi roletami guzikiem OnOff_02"
       use_blueprint:
-        path: homeassistant/motion_light.yaml
+        path: EPMatt/ikea_e1743.yaml
         input:
-          motion_entity: binary_sensor.ikea_of_sweden_tradfri_motion_sensor_ruch
-          light_target:
-            entity_id: light.boneio_32_l_06_76f0b4_light_16
-    - id: '1713885217809'
-      alias: zamknijWszystkoNaNoc
+          integration: Zigbee2MQTT
+          controller_entity: sensor.onoff_02_action
+          helper_last_controller_event: input_text.lastcontrollerevent
+          action_button_up_short:
+            - action: scene.turn_on
+              metadata: {}
+              data: {}
+              target:
+                entity_id: scene.r100pro
+          action_button_down_short:
+            - action: scene.turn_on
+              metadata: {}
+              data: {}
+              target:
+                entity_id: scene.r0pro              
+    - alias: "zamknijWszystkoNaNoc"
       description: zamyka wszystkie rolety jeśli wszystkie klamki i zamki są zamknięte
       trigger:
       - platform: sun
@@ -578,82 +591,78 @@ data:
         entity_id: e9dde732bd25d829fe3a86a4eb6ec81d
         type: close
       mode: single
-    - id: '1714469574083'
-      alias: Dzwonek
+    - alias: "Dzwonek"
       description: ''
-      trigger:
-      - device_id: 2e953f3699b8e166c5c96b31c076115e
-        domain: zha
-        platform: device
-        type: remote_button_short_press
-        subtype: turn_on
-      condition: []
-      action:
-      - service: media_player.play_media
-        target:
-          entity_id: media_player.sonos_roam
-        data:
-          announce: true
-          media_content_type: audio/x-wav
-          media_content_id: media-source://media_source/local/Ding-dong.wav
-          extra:
-            volume: 99
+      use_blueprint:
+        path: EPMatt/ikea_e1812.yaml
+        input:
+          integration: Zigbee2MQTT
+          controller_entity: sensor.button_01_action
+          helper_last_controller_event: input_text.lastcontrollerevent
+          action_button_short:
+            - action: media_player.play_media
+              target:
+                entity_id: media_player.sonos_roam
+              data:
+                announce: true
+                media_content_id: media-source://media_source/local/Ding-dong.wav
+                media_content_type: audio/x-wav
+                extra:
+                  volume: 99
+              metadata:
+                title: Ding-dong.wav
+                thumbnail: null
+                media_class: music
+                children_media_class: null
+                navigateIds:
+                  - {}
+                  - media_content_type: app
+                    media_content_id: media-source://media_source
       mode: single
-    - id: '1715569574001'
-      alias: Roleta_Gabinet_OnOff_01
-      description: "sterowanie roletami OnOff_01"
+    - alias: "Światło wszędzie"
+      description: 'OnOff_01_Swiatlo_ALL'
       use_blueprint:
         path: EPMatt/ikea_e1743.yaml
         input:
           integration: Zigbee2MQTT
-          controller_entity: sensor.onoff_01_mqtt_action
+          controller_entity: sensor.onoff_01_action
           helper_last_controller_event: input_text.lastcontrollerevent
-          action_button_up_long:
-            - service: cover.open_cover
-              metadata: {}
-              data: {}
-              target:
-                entity_id: cover.boneio_c_07_21a5c4_cover_04
           action_button_up_short:
-            - service: cover.stop_cover
+            - action: light.turn_on
               metadata: {}
               data: {}
               target:
-                entity_id: cover.boneio_c_07_21a5c4_cover_04
-          action_button_up_double:
-            - service: cover.set_cover_position
-              metadata: {}
-              data:
-                position: 66
-              target:
-                entity_id: cover.boneio_c_07_21a5c4_cover_04
+                entity_id:
+                  - light.boneio_32_l_06_76f0b4_light_12
+                  - light.boneio_32_l_06_76f0b4_light_16
+                  - light.boneio_32_l_06_76f0b4_light_14
+                  - light.boneio_32_l_06_76f0b4_light_28
+                  - light.boneio_32_l_06_76f0b4_light_23
+                  - light.boneio_32_l_06_76f0b4_light_20
+                  - light.boneio_32_l_06_76f0b4_light_17
           action_button_down_short:
-            - service: cover.stop_cover
+            - action: light.turn_off
               metadata: {}
               data: {}
               target:
-                entity_id: cover.boneio_c_07_21a5c4_cover_04
-          action_button_down_long:
-            - service: cover.close_cover
-              metadata: {}
-              data: {}
-              target:
-                entity_id: cover.boneio_c_07_21a5c4_cover_04
-          action_button_down_double:
-            - service: cover.set_cover_position
-              metadata: {}
-              data:
-                position: 33
-              target:
-                entity_id: cover.boneio_c_07_21a5c4_cover_04
-          button_up_double_press: true
-          button_down_double_press: true  
+                entity_id:
+                  - light.boneio_32_l_06_76f0b4_light_12
+                  - light.boneio_32_l_06_76f0b4_light_16
+                  - light.boneio_32_l_06_76f0b4_light_14
+                  - light.boneio_32_l_06_76f0b4_light_28
+                  - light.boneio_32_l_06_76f0b4_light_23
+                  - light.boneio_32_l_06_76f0b4_light_20
+                  - light.boneio_32_l_06_76f0b4_light_17
   configuration.yaml: |-
     default_config:
     frontend:
       themes: !include_dir_merge_named themes
-    automation: !include automations.yaml
-    scene: !include scenes.yaml
+    scene manual !include scenes_k8s.yaml
+    scene ui: !include scenes.yaml
+    # My own handmade automations
+    automation manual: !include_dir_merge_list automations/
+    # Automations I create in the UI
+    automation ui: !include automations.yaml
     http:
       use_x_forwarded_for: true
       trusted_proxies:
