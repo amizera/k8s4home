@@ -8,7 +8,7 @@ data:
     bind_host: 0.0.0.0
     bind_port: 3000
     auth_name: "g3n3zyp"
-    auth_pass: "$2y$10$qW/fY.bfpl4imLewqIoc5.aWUB5rnSbvO3Tyl3zE5OPxK7w3RtcvW"
+    auth_pass: "$2a$10$TIK6Zkj6S9NSzWqbtgzoFupAPrjk21fzXYPXXkYaRVneF/5q1Fmqq"
     language: "en"
     rlimit_nofile: 0
     rlimit_nproc: 0
