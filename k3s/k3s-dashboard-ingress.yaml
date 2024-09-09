@@ -1,0 +1,26 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: k3sdashboard-ingress
+  namespace: kubernetes-dashboard
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  rules:
+    - host: dashboard.48340.xyz
+      http:
+        paths:
+          - backend:
+              service:
+                port:
+                  number: 8000
+                name: kubernetes-dashboard-k
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - dashboard.48340.xyz
+      secretName: k3sdashboard-http-tls
+  ingressClassName: traefik

@@ -7,13 +7,13 @@ metadata:
 spec:
   selector:
     app: z2mqtt
-  type: NodePort
+  type: LoadBalancer
   ports:
     - name: z2mqtt
-      port: 8080
-      targetPort: 8080
-      nodePort: 31080
-      protocol: TCP
+      port: 8888
+      # targetPort: 8888
+      # nodePort: 31888
+      # protocol: TCP
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -70,25 +70,30 @@ spec:
         #  - /bin/sh
         #  - "-c"
         #  - "sleep 60m"
-        image: koenkk/zigbee2mqtt:latest
+        image: koenkk/zigbee2mqtt:1.39.0
         imagePullPolicy: Always
         env:
           - name: TZ
             value: Europe/Warsaw
           - name: "ZIGBEE2MQTT_DATA"
-            value: "/app"
+            value: "/app/data"
           - name: ZIGBEE2MQTT_CONFIG_MQTT_SERVER # optional - can also be configured in the configuration.yaml in the configmap
             value: "mqtt://10.0.50.11:31883"
         ports:
           - name: http
-            containerPort: 8080
+            containerPort: 8888
             protocol: TCP
         volumeMounts:
         - name: gfs-z2mqtt-volume
-          mountPath: /data
+          mountPath: /app/data
         - name: z2mqtt-config
-          mountPath: /app/configuration.yaml
+          mountPath: /app/data/configuration.yaml
           subPath: configuration.yaml
+        # - name: gfs-z2mqtt-volume
+        #   mountPath: /app/data/devices_rw.yaml
+        - name: z2mqtt-config
+          mountPath: /app/data/secret.yaml
+          subPath: secret.yaml 
         - name: z2mqtt-udev
           mountPath: /run/udev
         # - mountPath: /dev/ttyACM0
