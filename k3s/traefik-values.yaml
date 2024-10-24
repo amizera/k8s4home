@@ -22,6 +22,7 @@ deployment:
       - /bin/sh
       - -c
       - tail -n+1 -F /data/access.log
+      - --serversTransport.insecureSkipVerify=true
       imagePullPolicy: Always
       resources: {}
       terminationMessagePath: /dev/termination-log

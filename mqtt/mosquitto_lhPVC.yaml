@@ -17,35 +17,17 @@ spec:
     nodePort: 31883
 ---
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: gfs-mqtt-local-volume
-  namespace: home-assistant
-  labels:
-    type: local
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 2Gi
-  accessModes:
-    - ReadWriteMany
-  hostPath:
-    path: "/data/mosquitto"
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  name: lh-mqtt-01-volume-claim
   namespace: home-assistant
-  name: gfs-mqtt-volume-claim
-  labels:
-    app: mosquitto
 spec:
-  storageClassName: manual
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
+  storageClassName: longhorn-retain
   resources:
     requests:
-      storage: 1Gi
+      storage: 2Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -74,7 +56,7 @@ spec:
         - containerPort: 1883
         volumeMounts:
         - mountPath: /mosquitto/data
-          name: gfs-mqtt-volume
+          name: lh-mqtt-01-volume
         - name: mosquitto-config
           mountPath: /mosquitto/config/mosquitto.conf
           subPath: mosquitto.conf
@@ -90,9 +72,9 @@ spec:
               - SYS_ADMIN
       hostNetwork: true
       volumes:
-      - name: gfs-mqtt-volume
+      - name: lh-mqtt-01-volume
         persistentVolumeClaim:
-          claimName: gfs-mqtt-volume-claim
+          claimName: lh-mqtt-01-volume-claim
       - name: mosquitto-config
         configMap:
           name: mosquitto-config

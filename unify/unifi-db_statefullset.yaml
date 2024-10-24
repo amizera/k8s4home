@@ -1,0 +1,115 @@
+---      
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: unifi-db
+  namespace: unifi
+spec:
+  selector:
+    matchLabels:
+      app: unifi-db
+  serviceName: "mongo"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: unifi-db
+    spec:
+      containers:
+        - name: unifi-db
+          image: mongo:4.0.8
+          startupProbe:
+            exec:
+              command:
+                - mongo
+                - --eval
+                - "db.adminCommand('ping')"
+            initialDelaySeconds: 1
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 2
+          livenessProbe:
+            exec:
+              command:
+                - mongo
+                - --eval
+                - "db.adminCommand('ping')"
+            initialDelaySeconds: 1
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 2
+          readinessProbe:
+            exec:
+              command:
+                - mongo
+                - --eval
+                - "db.adminCommand('ping')"
+            initialDelaySeconds: 1
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 2
+          env:
+            - name: MONGO_INITDB_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  key: db_name
+                  name: unifi-db-config 
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  key: root_username
+                  name: unifi-db-config
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: root_password
+                  name: unifi-db-config                 
+            - name: MONGO_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: username
+                  name: unifi-db-config
+            - name: MONGO_PASS
+              valueFrom:
+                configMapKeyRef:
+                  key: password
+                  name: unifi-db-config
+          # command:
+          #   - mongod
+          #   - "--bind_ip_all"
+          #   - --config=/etc/mongo/mongodb.conf
+          volumeMounts:
+            - name: lh-mongo-volume
+              mountPath: /data/db
+            - name: unifi-db-config
+              mountPath: /etc/mongo
+            - name: mongodb-init-sh
+              mountPath: "/docker-entrypoint-initdb.d/"
+      volumes:
+        - name: unifi-db-config
+          configMap:
+            name: unifi-db-config
+            items:
+              - key: mongodb.conf
+                path: mongodb.conf
+        - name: mongodb-init-sh
+          configMap:
+            name: mongodb-init-sh       
+        - name: unifi-db-secret
+          secret: 
+            secretName: unifi-db-secret
+
+             
+  volumeClaimTemplates:
+  -  metadata:
+      name: lh-mongo-volume
+     spec:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: longhorn-retain
+      resources:
+       requests:
+        storage: 10Gi

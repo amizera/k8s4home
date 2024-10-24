@@ -76,7 +76,7 @@ spec:
       storage: 8Gi
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   namespace: home-assistant
   name: home-assistant
@@ -95,7 +95,7 @@ spec:
       initContainers:
       - name: mk-directory
         image: busybox:1.35
-        command: ['sh', '-c', 'sleep 5 && echo "creating dir" && mkdir -p /config/automations && mkdir -p /config/scenes']
+        command: ['sh', '-c', 'sleep 5 && echo "creating dir" && mkdir -p /config/automations && mkdir -p /config/scenes && mkdir -p /config/scripts']
         volumeMounts:
         - mountPath: /config
           name: gfs-ha-volume
@@ -126,6 +126,9 @@ spec:
         - mountPath: /config/scenes/scenes_k8s.yaml
           subPath: scenes_k8s.yaml
           name: configmap-file
+        - mountPath: /config/scenes/scripts_k8s.yaml
+          subPath: scripts_k8s.yaml
+          name: configmap-file          
         - mountPath: /config/customize.yaml
           subPath: customize.yaml
           name: gfs-ha-volume
@@ -663,6 +666,9 @@ data:
     automation manual: !include_dir_merge_list automations/
     # Automations I create in the UI
     automation ui: !include automations.yaml
+    scripts manual: !include_dir_merge_list scripts/
+    # Automations I create in the UI
+    scripts ui: !include scripts.yaml    
     http:
       use_x_forwarded_for: true
       trusted_proxies:
