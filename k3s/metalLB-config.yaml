@@ -4,7 +4,7 @@
   kind: IPAddressPool
   metadata:
     name: gnetk8s-pool
-    namespace: metallb
+    namespace: default
   spec:
     addresses:
     - 10.0.51.100-10.0.51.250
@@ -15,7 +15,7 @@ apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
 metadata:
   name: k8s-l2-net
-  namespace: metallb
+  namespace: default
 spec:
   ipAddressPools:
   - gnetk8s-pool

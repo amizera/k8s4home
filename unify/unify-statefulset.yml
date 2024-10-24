@@ -6,32 +6,45 @@ metadata:
   labels:
     name: home
 ---
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: gfs-unifi-local-volume
+#   namespace: unifi
+# spec:
+#   storageClassName: local-storage
+#   capacity:
+#     storage: 5Gi
+#   accessModes:
+#     - ReadWriteOnce
+#   hostPath:
+#     path: "/data/unifi"
+# ---
+# kind: PersistentVolumeClaim
+# apiVersion: v1
+# metadata:
+#   name: lh-unifi-01-volume-claim
+#   namespace: unifi
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   storageClassName: local-storage
+#   resources:
+#     requests:
+#       storage: 5Gi
+# ---
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: gfs-unifi-local-volume
-  namespace: unifi
-spec:
-  storageClassName: local-storage
-  capacity:
-    storage: 5Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/data/unifi"
----
 kind: PersistentVolumeClaim
-apiVersion: v1
 metadata:
-  name: gfs-unifi-volume-claim
+  name: lh-unifi-01-volume-claim
   namespace: unifi
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: local-storage
+  storageClassName: longhorn-retain
   resources:
     requests:
-      storage: 5Gi
+      storage: 10Gi
 ---
 kind: StatefulSet
 apiVersion: apps/v1
@@ -52,7 +65,7 @@ spec:
     spec:
       containers:
         - name: unifi-ctrl
-          image: 'lscr.io/linuxserver/unifi-controller:latest'
+          image: 'lscr.io/linuxserver/unifi-network-application:latest'
           imagePullPolicy: Always
           ports:
             - containerPort: 3478
@@ -68,15 +81,15 @@ spec:
             - containerPort: 6789
               protocol: TCP
           volumeMounts:
-            - name: gfs-unifi-volume
+            - name: lh-unifi-01-volume
               mountPath: /config
       volumes:
-        - name: gfs-unifi-volume
+        - name: lh-unifi-01-volume
           persistentVolumeClaim:
-            claimName: gfs-unifi-volume-claim
+            claimName: lh-unifi-01-volume-claim
   # volumeClaimTemplates:
   #   - metadata:
-  #       name: gfs-unifi-volume-claim
+  #       name: lh-unifi-01-volume-claim
   #     spec:
   #       accessModes: ["ReadWriteOnce"]
   #       resources:
@@ -88,8 +101,9 @@ apiVersion: v1
 metadata:
   name: lb-unifi
   namespace: unifi
-  # annotations:
-  #   metallb.universe.tf/allow-shared-ip: 'true'
+  annotations:
+    traefik.ingress.kubernetes.io/service.serversscheme: https # Set backend is HTTPS
+    traefik.ingress.kubernetes.io/service.serverstransport: self-signed-transport@kubernetescrd
 spec:
   ports:
     - name: '8080'
@@ -119,7 +133,7 @@ spec:
   selector:
     name: unifi-ctrl
   type: LoadBalancer
-  # loadBalancerIP: 10.0.50.128
+  loadBalancerIP: 10.0.51.102
 ---  
 kind: Service
 apiVersion: v1
@@ -136,5 +150,5 @@ spec:
   selector:
     name: unifi-ctrl
   type: LoadBalancer
-  # loadBalancerIP: 10.0.50.128
+  loadBalancerIP: 10.0.51.102
   

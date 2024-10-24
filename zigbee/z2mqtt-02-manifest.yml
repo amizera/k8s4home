@@ -8,9 +8,11 @@ spec:
   selector:
     app: z2mqtt-02
   type: LoadBalancer
+  loadBalancerIP: 10.0.51.105
   ports:
     - name: z2mqtt-02
-      port: 8888
+      port: 8082
+      targetPort: 8080
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -40,7 +42,7 @@ spec:
           - backend:
               service:
                 port:
-                  number: 8888
+                  number: 8082
                 name: z2mqtt-02
             path: /
             pathType: Prefix
@@ -51,7 +53,7 @@ spec:
   ingressClassName: traefik
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   namespace: home-assistant
   name: z2mqtt-02
@@ -62,8 +64,8 @@ spec:
   selector:
     matchLabels:
       app: z2mqtt-02
-  strategy:
-    type: Recreate
+  # strategy:
+  #   type: Recreate
   template:
     metadata:
       labels:
@@ -105,7 +107,7 @@ spec:
           - name: "ZIGBEE2MQTT_CONFIG_FRONTEND"
             value:  "false"
           - name: "ZIGBEE2MQTT_CONFIG_FRONTEND_PORT"
-            value:  "8888"
+            value:  "8080"
           # - name: "ZIGBEE2MQTT_CONFIG_DEVICES"
           #   value:  '/app/data/devices.yaml'                      
           # - name: "ZIGBEE2MQTT_CONFIG_GROUPS"
@@ -136,7 +138,7 @@ spec:
             value:  '["console","file"]'     
         ports:
         - name: http
-          containerPort: 8888
+          containerPort: 8080
           protocol: TCP
         volumeMounts:
         - name: longhorn-z2mqtt-02-volume

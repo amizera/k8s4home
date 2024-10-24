@@ -1,0 +1,35 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: ServersTransport
+metadata:
+  name: self-signed-transport
+  namespace: default
+spec:
+  insecureSkipVerify: true # Skip SSL verification
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: unifi-ingress
+  namespace: unifi
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/tls: "true"
+spec:
+  rules:
+    - host: unifi.48340.xyz
+      http:
+        paths:
+          - backend:
+              service:
+                port:
+                  number: 8443
+                name: unifi-ctrl
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - unifi.48340.xyz
+      secretName: unifi-tls
+  ingressClassName: traefik

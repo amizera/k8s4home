@@ -1,0 +1,131 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: ha-automations-lights-cm
+  namespace: home-assistant
+data:
+  automations-lights-cm.yaml: |
+    - alias: "RoletyWszystkie_OnOff_02"
+      description: "Sterowanie wszystkimi roletami guzikiem OnOff_02"
+      use_blueprint:
+        path: EPMatt/ikea_e1743.yaml
+        input:
+          integration: Zigbee2MQTT
+          controller_entity: sensor.onoff_02_action
+          helper_last_controller_event: input_text.lastcontrollerevent
+          action_button_up_short:
+            - action: scene.turn_on
+              metadata: {}
+              data: {}
+              target:
+                entity_id: scene.r100pro
+          action_button_down_short:
+            - action: scene.turn_on
+              metadata: {}
+              data: {}
+              target:
+                entity_id: scene.r0pro              
+    - alias: "zamknijWszystkoNaNoc"
+      description: zamyka wszystkie rolety jeśli wszystkie klamki i zamki są zamknięte
+      trigger:
+      - platform: sun
+        event: sunset
+        offset: 00:30:00
+      action:
+      - device_id: cf8f38db88ccd8bf86ebe9efd41b9b58
+        domain: cover
+        entity_id: cb6eed106dc75726637f7e685d49d689
+        type: close
+      - device_id: cf8f38db88ccd8bf86ebe9efd41b9b58
+        domain: cover
+        entity_id: 1876ab62f344e8d638b28606ce0d2ee9
+        type: close
+      - device_id: cf8f38db88ccd8bf86ebe9efd41b9b58
+        domain: cover
+        entity_id: a5a11ee8d63d9d1726e720383da22140
+        type: close
+      - device_id: cf8f38db88ccd8bf86ebe9efd41b9b58
+        domain: cover
+        entity_id: 4924564fbf13a69fa0873e66c9d3a863
+        type: close
+      - device_id: cf8f38db88ccd8bf86ebe9efd41b9b58
+        domain: cover
+        entity_id: 326374d57a47a388b91ecae0c1b3745a
+        type: close
+      - device_id: cf8f38db88ccd8bf86ebe9efd41b9b58
+        domain: cover
+        entity_id: 3aa3e0358897dc25edadde10d0a430ba
+        type: close
+      - device_id: cf8f38db88ccd8bf86ebe9efd41b9b58
+        domain: cover
+        entity_id: 4d4b162dbc7cd3aeb917ede1a0984a7b
+        type: close
+      - device_id: cf8f38db88ccd8bf86ebe9efd41b9b58
+        domain: cover
+        entity_id: e9dde732bd25d829fe3a86a4eb6ec81d
+        type: close
+      mode: single
+    - alias: "Dzwonek"
+      description: ''
+      use_blueprint:
+        path: EPMatt/ikea_e1812.yaml
+        input:
+          integration: Zigbee2MQTT
+          controller_entity: sensor.button_01_action
+          helper_last_controller_event: input_text.lastcontrollerevent
+          action_button_short:
+            - action: media_player.play_media
+              target:
+                entity_id: media_player.sonos_roam
+              data:
+                announce: true
+                media_content_id: media-source://media_source/local/Ding-dong.wav
+                media_content_type: audio/x-wav
+                extra:
+                  volume: 99
+              metadata:
+                title: Ding-dong.wav
+                thumbnail: null
+                media_class: music
+                children_media_class: null
+                navigateIds:
+                  - {}
+                  - media_content_type: app
+                    media_content_id: media-source://media_source
+      mode: single
+    - alias: "Światło wszędzie"
+      description: 'OnOff_01_Swiatlo_ALL'
+      use_blueprint:
+        path: EPMatt/ikea_e1743.yaml
+        input:
+          integration: Zigbee2MQTT
+          controller_entity: sensor.onoff_01_action
+          helper_last_controller_event: input_text.lastcontrollerevent
+          action_button_up_short:
+            - action: light.turn_on
+              metadata: {}
+              data: {}
+              target:
+                entity_id:
+                  - light.boneio_32_l_06_76f0b4_light_serwerownia
+                  - light.boneio_32_l_06_76f0b4_gabinet
+                  - light.boneio_32_l_06_76f0b4_korytarz_d
+                  - light.boneio_32_l_06_76f0b4_kuchnia
+                  - light.boneio_32_l_06_76f0b4_azienka_d
+                  - light.boneio_32_l_06_76f0b4_salon_fix
+                  - light.boneio_32_l_06_76f0b4_salon_hs
+          action_button_down_short:
+            - action: light.turn_off
+              metadata: {}
+              data: {}
+              target:
+                entity_id:
+                  - light.boneio_32_l_06_76f0b4_light_serwerownia
+                  - light.boneio_32_l_06_76f0b4_gabinet
+                  - light.boneio_32_l_06_76f0b4_korytarz_d
+                  - light.boneio_32_l_06_76f0b4_kuchnia
+                  - light.boneio_32_l_06_76f0b4_azienka_d
+                  - light.boneio_32_l_06_76f0b4_salon_fix
+                  - light.boneio_32_l_06_76f0b4_salon_hs
+  

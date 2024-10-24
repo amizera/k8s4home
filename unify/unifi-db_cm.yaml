@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: unifi-db-config
+  namespace: unifi
+immutable: false  # Indicates that the ConfigMap can be modified
+data:
+  username: unifi  # Sets the value of the "username" key to "admin1"
+  password: unifi
+  root_username: root
+  root_password: unifi
+  db_name: unifi
+  mongodb.conf: |  # Defines the content of the MongoDB configuration file
+    storage:
+      dbPath: /data/db  # Sets the MongoDB data storage path
+    replication:
+      replSetName: "rs0"  # Specifies the name of the MongoDB replica set

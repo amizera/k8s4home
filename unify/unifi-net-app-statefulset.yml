@@ -1,0 +1,159 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: lh-unifi-01-volume-claim
+  namespace: unifi
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn-retain
+  resources:
+    requests:
+      storage: 10Gi
+---
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: unifi-ctrl
+  namespace: unifi
+spec:
+  serviceName: "unifi"
+  replicas: 1
+  selector:
+    matchLabels:
+      name: unifi-ctrl
+  template:
+    metadata:
+      name: unifi-ctrl
+      labels:
+        name: unifi-ctrl
+    spec:
+      containers:
+        - name: unifi-ctrl
+          image: 'lscr.io/linuxserver/unifi-network-application:latest'
+          imagePullPolicy: Always
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "Europe/Warsaw"
+            - name: MONGO_USER
+              value: "unifi"
+            - name: MONGO_PASS
+              value: "unifi"
+            - name: MONGO_HOST
+              value: "unifi-db"
+            - name: MONGO_PORT
+              value: "27017"
+            - name: MONGO_DBNAME
+              value: "unifi"
+            - name: MONGO_AUTHSOURCE
+              value: "unifi"
+            - name: MEM_LIMIT
+              value: "1024" #optional
+            - name: MEM_STARTUP
+              value: "1024" #optional
+            # - name: MONGO_TLS
+            #   value:  #optional
+          ports:
+            - containerPort: 3478
+              protocol: UDP
+            - containerPort: 10001
+              protocol: UDP              
+            - containerPort: 8080
+              protocol: TCP
+            - containerPort: 8443
+              protocol: TCP
+            - containerPort: 8843
+              protocol: TCP
+            - containerPort: 8880
+              protocol: TCP
+            - containerPort: 6789
+              protocol: TCP
+          volumeMounts:
+            - name: lh-unifi-01-volume
+              mountPath: /config
+      volumes:
+        - name: lh-unifi-01-volume
+          persistentVolumeClaim:
+            claimName: lh-unifi-01-volume-claim
+        # - name: mongodb-init-sh
+        #   configMap:
+        #     name: mongodb-init-sh
+  # volumeClaimTemplates:
+  #   - metadata:
+  #       name: lh-unifi-01-volume-claim
+  #     spec:
+  #       accessModes: ["ReadWriteOnce"]
+  #       resources:
+  #         requests:
+  #           storage: 5Gi
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: lb-unifi
+  namespace: unifi
+  annotations:
+    traefik.ingress.kubernetes.io/service.serversscheme: https # Set backend is HTTPS
+    traefik.ingress.kubernetes.io/service.serverstransport: self-signed-transport@kubernetescrd
+spec:
+  ports:
+    - name: '8080'
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+    - name: '8443'
+      protocol: TCP
+      port: 8443
+      targetPort: 8443
+    - name: '8843'
+      protocol: TCP
+      port: 8843
+      targetPort: 8843
+    - name: '8880'
+      protocol: TCP
+      port: 8880
+      targetPort: 8880
+    - name: '6789'
+      protocol: TCP
+      port: 6789
+      targetPort: 6789
+    - name: '3478'
+      protocol: UDP
+      port: 3478
+      targetPort: 3478
+    - name: '10001'
+      protocol: UDP
+      port: 10001
+      targetPort: 10001
+  selector:
+    name: unifi-ctrl
+  type: LoadBalancer
+  loadBalancerIP: 10.0.51.102
+# ---  
+# kind: Service
+# apiVersion: v1
+# metadata:
+#   name: lb-unifi-udp
+#   namespace: unifi
+#   # annotations:
+#   #   metallb.universe.tf/allow-shared-ip: 'true'
+# spec:
+#   ports:
+#     - name: '3478'
+#       protocol: UDP
+#       port: 3478
+#       targetPort: 3478
+#     - name: '10001'
+#       protocol: UDP
+#       port: 10001
+#       targetPort: 10001
+#   selector:
+#     name: unifi-ctrl
+#   type: LoadBalancer
+#   loadBalancerIP: 10.0.51.102
+  
