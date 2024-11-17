@@ -76,9 +76,16 @@ data:
           current_position: 25
           assumed_state: true
           device_class: blind
-          friendly_name: Salon_HS_Fix
+          friendly_name: Pokój Kuby
           supported_features: 15
-          state: open          
+          state: open
+        cover.boneio_c_07_21a5c4_pok_j_ki:
+          current_position: 25
+          assumed_state: true
+          device_class: blind
+          friendly_name: Pokój Kingi
+          supported_features: 15
+          state: open                
       icon: mdi:window-shutter-settings
       metadata:
         cover.boneio_c_07_21a5c4_salon_fix:
@@ -100,7 +107,9 @@ data:
         cover.boneio_c_07_21a5c4_salon_hs_fix:
           entity_only: true
         cover.boneio_c_07_21a5c4_pok_j_ku:
-          entity_only: true          
+          entity_only: true
+        cover.boneio_c_07_21a5c4_pok_j_ki:
+          entity_only: true                   
     - name: R55PRO
       entities:
         cover.boneio_c_07_21a5c4_salon_fix:
@@ -170,7 +179,14 @@ data:
           current_position: 55
           assumed_state: true
           device_class: blind
-          friendly_name: Salon_HS_Fix
+          friendly_name: Pokój Kuby
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_pok_j_ki:
+          current_position: 55
+          assumed_state: true
+          device_class: blind
+          friendly_name: Pokój Kingi
           supported_features: 15
           state: open          
       icon: mdi:window-shutter-settings
@@ -194,6 +210,8 @@ data:
         cover.boneio_c_07_21a5c4_salon_hs_fix:
           entity_only: true
         cover.boneio_c_07_21a5c4_pok_j_ku:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_pok_j_ki:
           entity_only: true          
     - name: R100PRO
       entities:
@@ -264,7 +282,14 @@ data:
           current_position: 100
           assumed_state: true
           device_class: blind
-          friendly_name: Salon_HS_Fix
+          friendly_name: Pokój Kuby
+          supported_features: 15
+          state: open
+        cover.boneio_c_07_21a5c4_pok_j_ki:
+          current_position: 100
+          assumed_state: true
+          device_class: blind
+          friendly_name: Pokój Kingi
           supported_features: 15
           state: open          
       icon: mdi:window-shutter-settings
@@ -288,6 +313,8 @@ data:
         cover.boneio_c_07_21a5c4_salon_hs_fix:
           entity_only: true
         cover.boneio_c_07_21a5c4_pok_j_ku:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_pok_j_ki:
           entity_only: true          
     - name: R0PRO
       entities:
@@ -358,9 +385,16 @@ data:
           current_position: 0
           assumed_state: true
           device_class: blind
-          friendly_name: Salon_HS_Fix
+          friendly_name: Pokój Kuby
           supported_features: 15
-          state: open          
+          state: open
+        cover.boneio_c_07_21a5c4_pok_j_ki:
+          current_position: 0
+          assumed_state: true
+          device_class: blind
+          friendly_name: Pokój Kingi
+          supported_features: 15
+          state: open
       icon: mdi:window-shutter-settings
       metadata:
         cover.boneio_c_07_21a5c4_salon_fix:
@@ -382,5 +416,7 @@ data:
         cover.boneio_c_07_21a5c4_salon_hs_fix:
           entity_only: true
         cover.boneio_c_07_21a5c4_pok_j_ku:
+          entity_only: true
+        cover.boneio_c_07_21a5c4_pok_j_ki:
           entity_only: true          
  
