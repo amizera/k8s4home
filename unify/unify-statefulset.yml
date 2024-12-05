@@ -67,6 +67,13 @@ spec:
         - name: unifi-ctrl
           image: 'lscr.io/linuxserver/unifi-network-application:latest'
           imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+            requests: 
+              memory: 500M
+              cpu: "500m"          
           ports:
             - containerPort: 3478
               protocol: UDP

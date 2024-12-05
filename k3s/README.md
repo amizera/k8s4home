@@ -47,3 +47,8 @@ kubectl apply -f k3s/longhorn-storageclass-configmap.yaml
 kubectl apply -f k3s/longhorn-storageclass.yaml
 kubectl apply -f k3s/longhorn-ingress.yaml
 
+--------------- Kubernetes Dashboard
+
+helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
+

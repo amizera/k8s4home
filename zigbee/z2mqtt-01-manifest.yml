@@ -76,6 +76,13 @@ spec:
       - name: z2mqtt-01
         image: koenkk/zigbee2mqtt:1.40.1
         imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+          requests: 
+            memory: 500M
+            cpu: "500m"               
         env:
           - name: TZ
             value: Europe/Warsaw

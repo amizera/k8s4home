@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: influx-ingress
+  namespace: data
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+spec:
+  rules:
+    - host: influx.48340.xyz
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: influxdb
+                port:
+                  number: 8086
+  tls:
+    - hosts:
+        - influx.48340.xyz
+      secretName: influx-http-tls
+  ingressClassName: traefik
+---

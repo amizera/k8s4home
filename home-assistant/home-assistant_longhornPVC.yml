@@ -83,7 +83,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pvc-ha-retain
+  name: lh-ha-01-volume-claim
   namespace: home-assistant
 spec:
   accessModes:
@@ -126,10 +126,12 @@ spec:
         image: ghcr.io/home-assistant/home-assistant:2024.11.3
         imagePullPolicy: Always
         resources:
-          requests:
-            memory: "512Mi"
           limits:
-            memory: "1024Mi"
+            memory: "1Gi"
+            cpu: "1000m"
+          requests: 
+            memory: 500M
+            cpu: "500m"                  
         ports:
         - containerPort: 8123
         volumeMounts:
@@ -158,7 +160,7 @@ spec:
       volumes:
       - name: lh-ha-01-volume
         persistentVolumeClaim:
-          claimName: pvc-ha-retain
+          claimName: lh-ha-01-volume-claim
       - name: media-volume
         hostPath:
           path: /tmp/media
