@@ -88,7 +88,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: longhorn-retain
+  storageClassName: longhorn
   resources:
     requests:
       storage: 10Gi
@@ -123,7 +123,7 @@ spec:
         securityContext:
           privileged: true
       - name: home-assistant
-        image: ghcr.io/home-assistant/home-assistant:2024.11.3
+        image: ghcr.io/home-assistant/home-assistant:2024.12.1
         imagePullPolicy: Always
         resources:
           limits:
