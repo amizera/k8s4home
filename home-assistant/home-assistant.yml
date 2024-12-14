@@ -7,7 +7,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: home-assistant
+  namespace: ha
   name: home-assistant
 spec:
   selector:
@@ -29,6 +29,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-home-assistant
+  namespace: ha
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
@@ -43,42 +44,59 @@ spec:
                 name: home-assistant
                 port:
                   number: 80
+  tls:
+    - hosts:
+        - ha.48340.xyz
+      secretName: longhorn-http-tls
+  ingressClassName: traefik
 ---
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: gfs-ha-local-volume
-  namespace: home-assistant
-  labels:
-    type: local
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 10Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/data/home-assistant" # path to directory
----
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: gfs-ha-local-volume
+#   namespace: ha
+#   labels:
+#     type: local
+# spec:
+#   storageClassName: manual
+#   capacity:
+#     storage: 10Gi
+#   accessModes:
+#     - ReadWriteOnce
+#   hostPath:
+#     path: "/data/home-assistant" # path to directory
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: gfs-ha-volume-claim
+#   labels:
+#     app: home-assistant
+#   namespace: ha
+# spec:
+#   storageClassName: manual
+#   accessModes:
+#     - ReadWriteOnce #  must be the same as PersistentVolume
+#   resources:
+#     requests:
+#       storage: 8Gi
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: gfs-ha-volume-claim
-  labels:
-    app: home-assistant
-  namespace: home-assistant
+  name: home-assistant-pvc
+  namespace: ha
 spec:
-  storageClassName: manual
   accessModes:
-    - ReadWriteOnce #  must be the same as PersistentVolume
+    - ReadWriteOnce
+  storageClassName: longhorn
   resources:
     requests:
-      storage: 8Gi
+      storage: 10Gi
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  namespace: home-assistant
+  namespace: ha
   name: home-assistant
   labels:
     app: home-assistant
@@ -95,606 +113,68 @@ spec:
       initContainers:
       - name: mk-directory
         image: busybox:1.35
-        command: ['sh', '-c', 'sleep 5 && echo "creating dir" && mkdir -p /config/automations && mkdir -p /config/scenes && mkdir -p /config/scripts']
+        command: ['sh', '-c', 'sleep 5 && echo "creating dir" && mkdir -p /config/automations && mkdir -p /config/scenes && touch /config/scenes.yaml &&  touch /config/automations.yaml && touch /config/customize.yaml && mkdir -p /config/scripts && touch /config/scripts.yaml' ]
         volumeMounts:
         - mountPath: /config
-          name: gfs-ha-volume
+          name: ha-vol01
       containers:
       - name: bluez
         image: ghcr.io/mysticrenji/bluez-service:v1.0.0
         securityContext:
           privileged: true
       - name: home-assistant
-        image: ghcr.io/home-assistant/home-assistant:stable
+        image: ghcr.io/home-assistant/home-assistant:2024.12.1
         imagePullPolicy: Always
         resources:
           requests:
             memory: "256Mi"
-          limits:
-            memory: "512Mi"
+            cpu: "200m"
+          # limits:
+          #   memory: "768Mi"
+          #   cpu: "500m"                  
         ports:
         - containerPort: 8123
         volumeMounts:
         - mountPath: /config
-          name: gfs-ha-volume
+          name: ha-vol01
         - mountPath: /config/configuration.yaml
           subPath: configuration.yaml
-          name:  configmap-file
-        - mountPath: /config/automations/auto-lights.yaml
-          subPath: auto-lights.yaml
-          name: configmap-file
-        - mountPath: /config/scenes/scenes_k8s.yaml
-          subPath: scenes_k8s.yaml
-          name: configmap-file
-        - mountPath: /config/scenes/scripts_k8s.yaml
-          subPath: scripts_k8s.yaml
-          name: configmap-file          
-        - mountPath: /config/customize.yaml
-          subPath: customize.yaml
-          name: gfs-ha-volume
-        - mountPath: /media
-          name: gfs-ha-volume          
-        # - mountPath: /run/dbus
-        #   name: d-bus
-        #   readOnly: true
-        #- mountPath: /dev/ttyACM0
-        #  name: zigbee
-        #  subPath: ttyACM0
-        #- mountPath: /dev/video0
-        #  name: cam
+          name:  ha-configuration-cm
+        - mountPath: /config/scenes/scenes-cm.yaml
+          subPath: scenes-cm.yaml
+          name: ha-scenes-cm
+        - mountPath: /.dockerenv
+          name: volume-dockerenv
         securityContext:
           privileged: true
       hostNetwork: true
       volumes:
-      - name: gfs-ha-volume
+      - name: ha-vol01
         persistentVolumeClaim:
-          claimName: gfs-ha-volume-claim
+          claimName: home-assistant-pvc
       - name: media-volume
         hostPath:
           path: /tmp/media
-      # - name: config_yml
-      #   hostPath:
-      #     path: "config/configuration"
-
-      - name: configmap-file
+      - name: ha-configuration-cm
         configMap:
-          name: home-assistant-configmap
----
-kind: ConfigMap
-apiVersion: v1
-metadata:
-  name: home-assistant-configmap
-  namespace: home-assistant
-data:
-  known_devices.yaml: |
-  scenes_k8s.yaml: |
-    - name: Rolety_25prod
-      entities:
-        cover.boneio_c_07_21a5c4_cover_07:
-          current_position: 25
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Fix
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_04:
-          current_position: 25
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Gabinet
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_03:
-          current_position: 25
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Kuchnia_Drzwi
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_05:
-          current_position: 25
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Kuchnia_Okno
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_02:
-          current_position: 25
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Łazienka_dół
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_06:
-          current_position: 25
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Pralnia
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_08:
-          current_position: 25
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Salon_Drzwi
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_10:
-          current_position: 10
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Salon_HS_Drzwi
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_09:
-          current_position: 25
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Salon_HS_Fix
-          supported_features: 15
-          state: open
-      icon: mdi:window-shutter-settings
-      metadata:
-        cover.boneio_c_07_21a5c4_cover_07:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_04:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_03:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_05:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_02:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_06:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_08:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_10:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_09:
-          entity_only: true
-    - name: R55pro
-      entities:
-        cover.boneio_c_07_21a5c4_cover_07:
-          current_position: 55
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Fix
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_04:
-          current_position: 55
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Gabinet
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_03:
-          current_position: 55
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Kuchnia_Drzwi
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_05:
-          current_position: 55
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Kuchnia_Okno
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_02:
-          current_position: 55
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Łazienka_dół
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_06:
-          current_position: 55
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Pralnia
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_08:
-          current_position: 55
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Salon_Drzwi
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_10:
-          current_position: 50
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Salon_HS_Drzwi
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_09:
-          current_position: 55
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Salon_HS_Fix
-          supported_features: 15
-          state: open
-      icon: mdi:window-shutter-settings
-      metadata:
-        cover.boneio_c_07_21a5c4_cover_07:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_04:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_03:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_05:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_02:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_06:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_08:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_10:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_09:
-          entity_only: true
-    - name: R100pro
-      entities:
-        cover.boneio_c_07_21a5c4_cover_07:
-          current_position: 100
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Fix
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_04:
-          current_position: 100
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Gabinet
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_03:
-          current_position: 100
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Kuchnia_Drzwi
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_05:
-          current_position: 100
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Kuchnia_Okno
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_02:
-          current_position: 100
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Łazienka_dół
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_06:
-          current_position: 100
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Pralnia
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_08:
-          current_position: 100
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Salon_Drzwi
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_10:
-          current_position: 100
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Salon_HS_Drzwi
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_09:
-          current_position: 100
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Salon_HS_Fix
-          supported_features: 15
-          state: open
-      icon: mdi:window-shutter-settings
-      metadata:
-        cover.boneio_c_07_21a5c4_cover_07:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_04:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_03:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_05:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_02:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_06:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_08:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_10:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_09:
-          entity_only: true
-    - name: R0pro
-      entities:
-        cover.boneio_c_07_21a5c4_cover_07:
-          current_position: 0
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Fix
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_04:
-          current_position: 0
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Gabinet
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_03:
-          current_position: 0
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Kuchnia_Drzwi
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_05:
-          current_position: 0
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Kuchnia_Okno
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_02:
-          current_position: 0
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Łazienka_dół
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_06:
-          current_position: 0
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Pralnia
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_08:
-          current_position: 0
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Salon_Drzwi
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_10:
-          current_position: 0
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Salon_HS_Drzwi
-          supported_features: 15
-          state: open
-        cover.boneio_c_07_21a5c4_cover_09:
-          current_position: 0
-          assumed_state: true
-          device_class: blind
-          friendly_name: Roleta_Salon_HS_Fix
-          supported_features: 15
-          state: open
-      icon: mdi:window-shutter-settings
-      metadata:
-        cover.boneio_c_07_21a5c4_cover_07:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_04:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_03:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_05:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_02:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_06:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_08:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_10:
-          entity_only: true
-        cover.boneio_c_07_21a5c4_cover_09:
-          entity_only: true  
-  auto-lights.yaml: |
-    - alias: "RoletyWszystkie_OnOff_02"
-      description: "Sterowanie wszystkimi roletami guzikiem OnOff_02"
-      use_blueprint:
-        path: EPMatt/ikea_e1743.yaml
-        input:
-          integration: Zigbee2MQTT
-          controller_entity: sensor.onoff_02_action
-          helper_last_controller_event: input_text.lastcontrollerevent
-          action_button_up_short:
-            - action: scene.turn_on
-              metadata: {}
-              data: {}
-              target:
-                entity_id: scene.r100pro
-          action_button_down_short:
-            - action: scene.turn_on
-              metadata: {}
-              data: {}
-              target:
-                entity_id: scene.r0pro              
-    - alias: "zamknijWszystkoNaNoc"
-      description: zamyka wszystkie rolety jeśli wszystkie klamki i zamki są zamknięte
-      trigger:
-      - platform: sun
-        event: sunset
-        offset: 00:30:00
-      condition:
-      - condition: state
-        entity_id: binary_sensor.boneio_c_07_21a5c4_in_28
-        state: 'off'
-      - condition: state
-        entity_id: binary_sensor.boneio_c_07_21a5c4_in_26
-        state: 'off'
-      - condition: state
-        entity_id: binary_sensor.boneio_c_07_21a5c4_in_29
-        state: 'off'
-      - condition: state
-        entity_id: binary_sensor.boneio_c_07_21a5c4_in_33
-        state: 'off'
-      - condition: state
-        entity_id: binary_sensor.boneio_c_07_21a5c4_in_25
-        state: 'off'
-      - condition: state
-        entity_id: binary_sensor.boneio_c_07_21a5c4_in_35
-        state: 'off'
-      - condition: state
-        entity_id: binary_sensor.boneio_c_07_21a5c4_in_31
-        state: 'off'
-      - condition: state
-        entity_id: lock.boneio_c_07_21a5c4_drzwi
-        state: locked
-      action:
-      - device_id: cf8f38db88ccd8bf86ebe9efd41b9b58
-        domain: cover
-        entity_id: cb6eed106dc75726637f7e685d49d689
-        type: close
-      - device_id: cf8f38db88ccd8bf86ebe9efd41b9b58
-        domain: cover
-        entity_id: 1876ab62f344e8d638b28606ce0d2ee9
-        type: close
-      - device_id: cf8f38db88ccd8bf86ebe9efd41b9b58
-        domain: cover
-        entity_id: a5a11ee8d63d9d1726e720383da22140
-        type: close
-      - device_id: cf8f38db88ccd8bf86ebe9efd41b9b58
-        domain: cover
-        entity_id: 4924564fbf13a69fa0873e66c9d3a863
-        type: close
-      - device_id: cf8f38db88ccd8bf86ebe9efd41b9b58
-        domain: cover
-        entity_id: 326374d57a47a388b91ecae0c1b3745a
-        type: close
-      - device_id: cf8f38db88ccd8bf86ebe9efd41b9b58
-        domain: cover
-        entity_id: 3aa3e0358897dc25edadde10d0a430ba
-        type: close
-      - device_id: cf8f38db88ccd8bf86ebe9efd41b9b58
-        domain: cover
-        entity_id: 4d4b162dbc7cd3aeb917ede1a0984a7b
-        type: close
-      - device_id: cf8f38db88ccd8bf86ebe9efd41b9b58
-        domain: cover
-        entity_id: e9dde732bd25d829fe3a86a4eb6ec81d
-        type: close
-      mode: single
-    - alias: "Dzwonek"
-      description: ''
-      use_blueprint:
-        path: EPMatt/ikea_e1812.yaml
-        input:
-          integration: Zigbee2MQTT
-          controller_entity: sensor.button_01_action
-          helper_last_controller_event: input_text.lastcontrollerevent
-          action_button_short:
-            - action: media_player.play_media
-              target:
-                entity_id: media_player.sonos_roam
-              data:
-                announce: true
-                media_content_id: media-source://media_source/local/Ding-dong.wav
-                media_content_type: audio/x-wav
-                extra:
-                  volume: 99
-              metadata:
-                title: Ding-dong.wav
-                thumbnail: null
-                media_class: music
-                children_media_class: null
-                navigateIds:
-                  - {}
-                  - media_content_type: app
-                    media_content_id: media-source://media_source
-      mode: single
-    - alias: "Światło wszędzie"
-      description: 'OnOff_01_Swiatlo_ALL'
-      use_blueprint:
-        path: EPMatt/ikea_e1743.yaml
-        input:
-          integration: Zigbee2MQTT
-          controller_entity: sensor.onoff_01_action
-          helper_last_controller_event: input_text.lastcontrollerevent
-          action_button_up_short:
-            - action: light.turn_on
-              metadata: {}
-              data: {}
-              target:
-                entity_id:
-                  - light.boneio_32_l_06_76f0b4_light_12
-                  - light.boneio_32_l_06_76f0b4_light_16
-                  - light.boneio_32_l_06_76f0b4_light_14
-                  - light.boneio_32_l_06_76f0b4_light_28
-                  - light.boneio_32_l_06_76f0b4_light_23
-                  - light.boneio_32_l_06_76f0b4_light_20
-                  - light.boneio_32_l_06_76f0b4_light_17
-          action_button_down_short:
-            - action: light.turn_off
-              metadata: {}
-              data: {}
-              target:
-                entity_id:
-                  - light.boneio_32_l_06_76f0b4_light_12
-                  - light.boneio_32_l_06_76f0b4_light_16
-                  - light.boneio_32_l_06_76f0b4_light_14
-                  - light.boneio_32_l_06_76f0b4_light_28
-                  - light.boneio_32_l_06_76f0b4_light_23
-                  - light.boneio_32_l_06_76f0b4_light_20
-                  - light.boneio_32_l_06_76f0b4_light_17
-  configuration.yaml: |-
-    default_config:
-    frontend:
-      themes: !include_dir_merge_named themes
-    scene manual: !include_dir_merge_list scenes/
-    scene ui: !include scenes.yaml
-    # My own handmade automations
-    automation manual: !include_dir_merge_list automations/
-    # Automations I create in the UI
-    automation ui: !include automations.yaml
-    # scripts manual: !include_dir_merge_list scripts/
-    # # Automations I create in the UI
-    # scripts ui: !include scripts.yaml    
-    http:
-      use_x_forwarded_for: true
-      trusted_proxies:
-        - 10.0.0.0/8
-        - 173.245.48.0/20
-        - 103.21.244.0/22
-        - 103.22.200.0/22
-        - 103.31.4.0/22
-        - 141.101.64.0/18
-        - 108.162.192.0/18
-        - 190.93.240.0/20
-        - 188.114.96.0/20
-        - 197.234.240.0/22
-        - 198.41.128.0/17
-        - 162.158.0.0/15
-        - 104.16.0.0/13
-        - 104.24.0.0/14
-        - 172.64.0.0/13
-        - 131.0.72.0/22
-        - 2400:cb00::/32
-        - 2606:4700::/32
-        - 2803:f800::/32
-        - 2405:b500::/32
-        - 2405:8100::/32
-        - 2a06:98c0::/29
-        - 2c0f:f248::/32
-    homeassistant:
-      customize: !include customize.yaml
-      
+          name: ha-configuration-cm
+      - name: ha-automations-lights-cm
+        configMap:
+          name: ha-automations-lights-cm
+      - name: ha-scenes-cm
+        configMap:
+          name: ha-scenes-cm
+      - name: volume-dockerenv
+        emptyDir: {}
+      tolerations:
+        - key: "node.kubernetes.io/not-ready"
+          operator: "Exists"
+          effect: "NoExecute"
+          tolerationSeconds: 300
+      # affinity:
+      #   podAntiAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #     - labelSelector:
+      #         matchLabels:
+      #           app: ha
+      #       topologyKey: kubernetes.io/hostname

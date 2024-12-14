@@ -21,7 +21,8 @@ spec:
     spec:
       automountServiceAccountToken: true
       containers:
-      - image: k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.3.0
+      - image: registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.14.0
+      # - image: k8s.gcr.io/kube-state-metrics/kube-state-metrics-arm64:v2.8.2
         livenessProbe:
           httpGet:
             path: /healthz
@@ -41,12 +42,12 @@ spec:
           initialDelaySeconds: 5
           timeoutSeconds: 5
         resources:
-          limits:
-            memory: "1Gi"
-            cpu: "1000m"
+          # limits:
+          #   memory: "500Mi"
+          #   cpu: "200m"
           requests: 
-            memory: 500M
-            cpu: "500m"            
+            memory: "250Mi"
+            cpu: "50m"            
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true

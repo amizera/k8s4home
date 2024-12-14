@@ -3,7 +3,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: ha-automations-lights-cm
-  namespace: home-assistant
+  namespace: ha
 data:
   automations-lights-cm.yaml: |
     - alias: "RoletyWszystkie_OnOff_02"

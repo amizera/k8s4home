@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace.dashboard_rolety",
+  "data": {
+    "config": {
+      "views": [
+        {
+          "title": "Rolety",
+          "cards": [
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "cover.boneio_c_07_21a5c4_gabinet",
+                  "name": "Gaabinet",
+                  "secondary_info": "position"
+                },
+                {
+                  "entity": "cover.boneio_c_07_21a5c4_azienka",
+                  "name": "Łazienka",
+                  "secondary_info": "position"
+                },
+                {
+                  "entity": "cover.boneio_c_07_21a5c4_kuchnia_okno",
+                  "name": "Kuchnia okno",
+                  "secondary_info": "position"
+                },
+                {
+                  "entity": "cover.boneio_c_07_21a5c4_kuchnia_drzwi",
+                  "name": "Kuchnia drzwi",
+                  "secondary_info": "position"
+                },
+                {
+                  "entity": "cover.boneio_c_07_21a5c4_salon_hs",
+                  "name": "Salon HS",
+                  "secondary_info": "position"
+                },
+                {
+                  "entity": "cover.boneio_c_07_21a5c4_salon_hs_fix",
+                  "name": "Salon HS FIX",
+                  "secondary_info": "position"
+                },
+                {
+                  "entity": "cover.boneio_c_07_21a5c4_salon_drzwi",
+                  "name": "Salon drzwi",
+                  "secondary_info": "position"
+                },
+                {
+                  "entity": "cover.boneio_c_07_21a5c4_salon_fix",
+                  "name": "Salon FIX",
+                  "secondary_info": "position"
+                },
+                {
+                  "entity": "cover.boneio_c_07_21a5c4_pralnia",
+                  "name": "Pralnia",
+                  "secondary_info": "position"
+                },
+                {
+                  "entity": "cover.boneio_c_07_21a5c4_pok_j_ku",
+                  "secondary_info": "position",
+                  "name": "Pokój Kuby"
+                },
+                {
+                  "entity": "cover.boneio_c_07_21a5c4_pok_j_ki",
+                  "name": "Pokój Kingi",
+                  "secondary_info": "position"
+                },
+                {
+                  "entity": "cover.boneio_c_07_21a5c4_sypialnia",
+                  "secondary_info": "position",
+                  "name": "Sypialnia"
+                }
+              ]
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "scene.r100pro",
+                  "name": "100%",
+                  "secondary_info": "last-changed"
+                },
+                {
+                  "entity": "scene.r55pro",
+                  "name": "55%",
+                  "secondary_info": "last-changed"
+                },
+                {
+                  "entity": "scene.r25pro",
+                  "name": "25%",
+                  "secondary_info": "last-changed"
+                },
+                {
+                  "entity": "scene.r0pro",
+                  "name": "0%",
+                  "secondary_info": "last-changed"
+                }
+              ],
+              "title": "Wszystkie rolety:"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

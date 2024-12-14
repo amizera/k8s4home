@@ -1,0 +1,470 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace.dashboard_okna",
+  "data": {
+    "config": {
+      "views": [
+        {
+          "title": "Home",
+          "cards": [
+            {
+              "type": "conditional",
+              "conditions": [
+                {
+                  "entity": "binary_sensor.boneio_cover_gabinet_ou",
+                  "state": "on"
+                }
+              ],
+              "card": {
+                "show_name": true,
+                "show_icon": true,
+                "show_state": false,
+                "type": "glance",
+                "entities": [
+                  {
+                    "entity": "binary_sensor.boneio_cover_gabinet_ou",
+                    "name": "Gabinet UCHYLONE",
+                    "icon": "mdi:window-open"
+                  }
+                ],
+                "state_color": true
+              }
+            },
+            {
+              "type": "conditional",
+              "conditions": [
+                {
+                  "entity": "binary_sensor.boneio_cover_gabinet_ou",
+                  "state": "off"
+                }
+              ],
+              "card": {
+                "type": "glance",
+                "entities": [
+                  {
+                    "entity": "binary_sensor.boneio_cover_gabinet_ou",
+                    "name": "Gabinet ZAMKNIĘTE",
+                    "icon": "mdi:window-closed-variant"
+                  }
+                ],
+                "state_color": true,
+                "show_name": true,
+                "show_state": false
+              }
+            },
+            {
+              "type": "conditional",
+              "conditions": [
+                {
+                  "entity": "binary_sensor.boneio_cover_azienka_os",
+                  "state": "on"
+                },
+                {
+                  "entity": "binary_sensor.boneio_cover_azienka_ou",
+                  "state": "on"
+                }
+              ],
+              "card": {
+                "type": "glance",
+                "entities": [
+                  {
+                    "entity": "binary_sensor.boneio_cover_azienka_os",
+                    "name": "Łazienka OTWARTE",
+                    "icon": "mdi:window-open-variant"
+                  }
+                ],
+                "state_color": true,
+                "show_name": true,
+                "show_state": false
+              }
+            },
+            {
+              "type": "conditional",
+              "conditions": [
+                {
+                  "entity": "binary_sensor.boneio_cover_azienka_os",
+                  "state": "off"
+                },
+                {
+                  "entity": "binary_sensor.boneio_cover_azienka_ou",
+                  "state": "off"
+                }
+              ],
+              "card": {
+                "type": "glance",
+                "entities": [
+                  {
+                    "entity": "binary_sensor.boneio_cover_azienka_os",
+                    "name": "Łazienka ZAMKNIĘTE",
+                    "icon": "mdi:window-closed-variant"
+                  }
+                ],
+                "state_color": true,
+                "show_name": true,
+                "show_state": false
+              }
+            },
+            {
+              "type": "conditional",
+              "conditions": [
+                {
+                  "entity": "binary_sensor.boneio_cover_azienka_os",
+                  "state": "off"
+                },
+                {
+                  "entity": "binary_sensor.boneio_cover_azienka_ou",
+                  "state": "on"
+                }
+              ],
+              "card": {
+                "type": "glance",
+                "entities": [
+                  {
+                    "entity": "binary_sensor.boneio_cover_azienka_ou",
+                    "name": "Łazienka UCHYLONE",
+                    "icon": "mdi:window-open"
+                  }
+                ],
+                "state_color": true,
+                "show_name": true,
+                "show_state": false
+              }
+            },
+            {
+              "type": "conditional",
+              "conditions": [
+                {
+                  "entity": "binary_sensor.boneio_cover_kuchnia_ou",
+                  "state": "off"
+                }
+              ],
+              "card": {
+                "type": "glance",
+                "entities": [
+                  {
+                    "entity": "binary_sensor.boneio_cover_kuchnia_ou",
+                    "name": "Kuchnia ZAMKNIĘTE",
+                    "icon": "mdi:window-closed-variant"
+                  }
+                ],
+                "state_color": true,
+                "show_name": true,
+                "show_state": false
+              }
+            },
+            {
+              "type": "conditional",
+              "conditions": [
+                {
+                  "entity": "binary_sensor.boneio_cover_kuchnia_ou",
+                  "state": "on"
+                }
+              ],
+              "card": {
+                "show_name": true,
+                "show_icon": true,
+                "show_state": false,
+                "type": "glance",
+                "entities": [
+                  {
+                    "entity": "binary_sensor.boneio_cover_kuchnia_ou",
+                    "name": "Kuchnia UCHYLONE",
+                    "icon": "mdi:window-open"
+                  }
+                ],
+                "state_color": true
+              }
+            },
+            {
+              "type": "conditional",
+              "conditions": [
+                {
+                  "entity": "binary_sensor.boneio_cover_kuchnia_ds",
+                  "state": "off"
+                },
+                {
+                  "entity": "binary_sensor.boneio_cover_kuchnia_du",
+                  "state": "on"
+                }
+              ],
+              "card": {
+                "type": "glance",
+                "entities": [
+                  {
+                    "entity": "binary_sensor.boneio_cover_kuchnia_du",
+                    "name": "Kuchnia Drzwi UCHYLONE",
+                    "icon": "mdi:window-open"
+                  }
+                ],
+                "state_color": true,
+                "show_name": true,
+                "show_state": false
+              }
+            },
+            {
+              "type": "conditional",
+              "conditions": [
+                {
+                  "entity": "binary_sensor.boneio_cover_kuchnia_ds",
+                  "state": "off"
+                },
+                {
+                  "entity": "binary_sensor.boneio_cover_kuchnia_du",
+                  "state": "off"
+                }
+              ],
+              "card": {
+                "type": "glance",
+                "entities": [
+                  {
+                    "entity": "binary_sensor.boneio_cover_kuchnia_du",
+                    "name": "Kuchnia Drzwi ZAMKNIĘTE",
+                    "icon": "mdi:window-closed-variant"
+                  }
+                ],
+                "state_color": true,
+                "show_name": true,
+                "show_state": false
+              }
+            },
+            {
+              "type": "conditional",
+              "conditions": [
+                {
+                  "entity": "binary_sensor.boneio_cover_kuchnia_ds",
+                  "state": "on"
+                },
+                {
+                  "entity": "binary_sensor.boneio_cover_kuchnia_du",
+                  "state": "on"
+                }
+              ],
+              "card": {
+                "type": "glance",
+                "entities": [
+                  {
+                    "entity": "binary_sensor.boneio_cover_kuchnia_du",
+                    "name": "Kuchnia Drzwi OTWARTE",
+                    "icon": "mdi:window-open-variant"
+                  }
+                ],
+                "state_color": true,
+                "show_name": true,
+                "show_state": false
+              }
+            },
+            {
+              "type": "conditional",
+              "conditions": [
+                {
+                  "entity": "binary_sensor.boneio_cover_salon_hs",
+                  "state": "off"
+                },
+                {
+                  "entity": "binary_sensor.boneio_cover_salon_hs",
+                  "state": "off"
+                }
+              ],
+              "card": {
+                "type": "glance",
+                "entities": [
+                  {
+                    "entity": "binary_sensor.boneio_cover_salon_hs",
+                    "name": "Salon HS ZAMKNIĘTE",
+                    "icon": "mdi:window-closed-variant"
+                  }
+                ],
+                "state_color": true,
+                "show_name": true,
+                "show_state": false
+              }
+            },
+            {
+              "type": "conditional",
+              "conditions": [
+                {
+                  "entity": "binary_sensor.boneio_cover_salon_hs",
+                  "state": "on"
+                },
+                {
+                  "entity": "binary_sensor.boneio_cover_salon_hs",
+                  "state": "on"
+                }
+              ],
+              "card": {
+                "type": "glance",
+                "entities": [
+                  {
+                    "entity": "binary_sensor.boneio_cover_salon_hs",
+                    "name": "Salon HS OTWARTE",
+                    "icon": "mdi:window-open-variant"
+                  }
+                ],
+                "state_color": true,
+                "show_name": true,
+                "show_state": false
+              }
+            },
+            {
+              "type": "conditional",
+              "conditions": [
+                {
+                  "entity": "binary_sensor.boneio_cover_salon_ds",
+                  "state": "off"
+                },
+                {
+                  "entity": "binary_sensor.boneio_cover_salon_du",
+                  "state": "off"
+                }
+              ],
+              "card": {
+                "type": "glance",
+                "entities": [
+                  {
+                    "entity": "binary_sensor.boneio_cover_salon_du",
+                    "name": "Salon Drzwi ZAMKNIĘTE",
+                    "icon": "mdi:window-closed-variant"
+                  }
+                ],
+                "state_color": true,
+                "show_name": true,
+                "show_state": false
+              }
+            },
+            {
+              "type": "conditional",
+              "conditions": [
+                {
+                  "entity": "binary_sensor.boneio_cover_salon_ds",
+                  "state": "on"
+                },
+                {
+                  "entity": "binary_sensor.boneio_cover_salon_du",
+                  "state": "on"
+                }
+              ],
+              "card": {
+                "type": "glance",
+                "entities": [
+                  {
+                    "entity": "binary_sensor.boneio_cover_salon_du",
+                    "name": "Salon Drzwi OTWARTE",
+                    "icon": "mdi:window-open-variant"
+                  }
+                ],
+                "state_color": true,
+                "show_name": true,
+                "show_state": false
+              }
+            },
+            {
+              "type": "conditional",
+              "conditions": [
+                {
+                  "entity": "binary_sensor.boneio_cover_salon_ds",
+                  "state": "off"
+                },
+                {
+                  "entity": "binary_sensor.boneio_cover_salon_du",
+                  "state": "on"
+                }
+              ],
+              "card": {
+                "type": "glance",
+                "entities": [
+                  {
+                    "entity": "binary_sensor.boneio_cover_salon_du",
+                    "name": "Salon Drzwi UCHYLONE",
+                    "icon": "mdi:window-open"
+                  }
+                ],
+                "state_color": true,
+                "show_name": true,
+                "show_state": false
+              }
+            },
+            {
+              "type": "conditional",
+              "conditions": [
+                {
+                  "entity": "binary_sensor.boneio_cover_pralnia_os",
+                  "state": "off"
+                },
+                {
+                  "entity": "binary_sensor.boneio_cover_pralnia_ou",
+                  "state": "on"
+                }
+              ],
+              "card": {
+                "type": "glance",
+                "entities": [
+                  {
+                    "entity": "binary_sensor.boneio_cover_pralnia_ou",
+                    "name": "Pralnia UCHYLONE",
+                    "icon": "mdi:window-open"
+                  }
+                ],
+                "state_color": true,
+                "show_name": true,
+                "show_state": false
+              }
+            },
+            {
+              "type": "conditional",
+              "conditions": [
+                {
+                  "entity": "binary_sensor.boneio_cover_pralnia_os",
+                  "state": "off"
+                },
+                {
+                  "entity": "binary_sensor.boneio_cover_pralnia_ou",
+                  "state": "off"
+                }
+              ],
+              "card": {
+                "type": "glance",
+                "entities": [
+                  {
+                    "entity": "binary_sensor.boneio_cover_pralnia_ou",
+                    "name": "Pralnia ZAMKNIĘTE",
+                    "icon": "mdi:window-closed-variant"
+                  }
+                ],
+                "state_color": true,
+                "show_name": true,
+                "show_state": false
+              }
+            },
+            {
+              "type": "conditional",
+              "conditions": [
+                {
+                  "entity": "binary_sensor.boneio_cover_pralnia_os",
+                  "state": "on"
+                },
+                {
+                  "entity": "binary_sensor.boneio_cover_pralnia_ou",
+                  "state": "on"
+                }
+              ],
+              "card": {
+                "type": "glance",
+                "entities": [
+                  {
+                    "entity": "binary_sensor.boneio_cover_pralnia_ou",
+                    "name": "Pralnia OTWARTE",
+                    "icon": "mdi:window-open-variant"
+                  }
+                ],
+                "state_color": true,
+                "show_name": true,
+                "show_state": false
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

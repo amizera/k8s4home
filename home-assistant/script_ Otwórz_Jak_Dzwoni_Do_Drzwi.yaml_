@@ -1,0 +1,16 @@
+alias: Otwórz_Jak_Dzwoni_Do_Drzwi
+use_blueprint:
+  path: homeassistant/confirmable_notification.yaml
+  input:
+    notify_device: 9cd29fc73cf521970e0f0de5fd3e1a5b
+    title: Dzwonek do drzwi.
+    message: Otworzyć drzwi ?
+    confirm_text: Otwórz
+    confirm_action:
+      - action: lock.unlock
+        data: {}
+        target:
+          entity_id: lock.boneio_c_07_21a5c4_drzwi
+    dismiss_text: Nic
+description: ""
+icon: mdi:bell-alert

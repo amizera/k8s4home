@@ -1,0 +1,26 @@
+alias: Serwerownia_Światło_OnOff_05
+description: ""
+use_blueprint:
+  path: EPMatt/ikea_e1743.yaml
+  input:
+    integration: Zigbee2MQTT
+    controller_entity: sensor.onoff_05_action_2
+    helper_last_controller_event: input_text.lastevent_onoff_05
+    action_button_up_short:
+      - action: light.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.boneio_32_l_06_76f0b4_serwerownia
+    action_button_down_short:
+      - action: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.boneio_32_l_06_76f0b4_serwerownia
+    action_button_up_long:
+      - action: light.toggle
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.boneio_32_l_06_76f0b4_korytarz_d

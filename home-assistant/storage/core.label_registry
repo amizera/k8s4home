@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "minor_version": 2,
+  "key": "core.label_registry",
+  "data": {
+    "labels": [
+      {
+        "color": "red",
+        "description": null,
+        "icon": "mdi:lightning-bolt",
+        "label_id": "energia",
+        "name": "energia",
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
+      },
+      {
+        "color": "light-blue",
+        "description": null,
+        "icon": "mdi:window-closed-variant",
+        "label_id": "okno",
+        "name": "okno",
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
+      },
+      {
+        "color": "yellow",
+        "description": null,
+        "icon": "mdi:home-lightbulb-outline",
+        "label_id": "swiatlo",
+        "name": "Światło",
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
+      },
+      {
+        "color": "indigo",
+        "description": null,
+        "icon": "mdi:window-shutter",
+        "label_id": "roleta",
+        "name": "Roleta",
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
+      },
+      {
+        "color": "red",
+        "description": null,
+        "icon": "mdi:leak",
+        "label_id": "czujnik",
+        "name": "Czujnik",
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
+      },
+      {
+        "color": "lime",
+        "description": null,
+        "icon": "mdi:ip",
+        "label_id": "it",
+        "name": "IT",
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
+      },
+      {
+        "color": "lime",
+        "description": null,
+        "icon": "mdi:toggle-switch-variant",
+        "label_id": "przelacznik",
+        "name": "Przełącznik",
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
+      }
+    ]
+  }
+}

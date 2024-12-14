@@ -1,0 +1,155 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "bluetooth.remote_scanners",
+  "data": {
+    "08:D1:F9:EF:45:58": {
+      "connectable": true,
+      "expire_seconds": 195.0,
+      "discovered_device_advertisement_datas": {
+        "D0:64:3F:AE:A4:F0": {
+          "device": {
+            "address": "D0:64:3F:AE:A4:F0",
+            "name": null,
+            "rssi": -94,
+            "details": {
+              "source": "08:D1:F9:EF:45:58",
+              "address_type": 1
+            }
+          },
+          "advertisement_data": {
+            "local_name": null,
+            "manufacturer_data": {
+              "76": "12026e020711065dffe551b92fbadb2f633a710e69e45e"
+            },
+            "service_data": {},
+            "service_uuids": [],
+            "rssi": -94,
+            "tx_power": -127,
+            "platform_data": []
+          }
+        },
+        "DF:E9:FC:48:7E:F4": {
+          "device": {
+            "address": "DF:E9:FC:48:7E:F4",
+            "name": null,
+            "rssi": -96,
+            "details": {
+              "source": "08:D1:F9:EF:45:58",
+              "address_type": 1
+            }
+          },
+          "advertisement_data": {
+            "local_name": null,
+            "manufacturer_data": {
+              "76": "12020002"
+            },
+            "service_data": {},
+            "service_uuids": [],
+            "rssi": -96,
+            "tx_power": -127,
+            "platform_data": []
+          }
+        },
+        "3C:33:BD:12:59:55": {
+          "device": {
+            "address": "3C:33:BD:12:59:55",
+            "name": null,
+            "rssi": -96,
+            "details": {
+              "source": "08:D1:F9:EF:45:58",
+              "address_type": 1
+            }
+          },
+          "advertisement_data": {
+            "local_name": null,
+            "manufacturer_data": {
+              "6": "01092002291d50b3679022afbae82b8406e0600e2aff08d57f2a48"
+            },
+            "service_data": {},
+            "service_uuids": [],
+            "rssi": -96,
+            "tx_power": -127,
+            "platform_data": []
+          }
+        },
+        "67:16:D4:1D:27:20": {
+          "device": {
+            "address": "67:16:D4:1D:27:20",
+            "name": null,
+            "rssi": -100,
+            "details": {
+              "source": "08:D1:F9:EF:45:58",
+              "address_type": 1
+            }
+          },
+          "advertisement_data": {
+            "local_name": null,
+            "manufacturer_data": {
+              "76": "1007321fde218a5568"
+            },
+            "service_data": {},
+            "service_uuids": [],
+            "rssi": -100,
+            "tx_power": 12,
+            "platform_data": []
+          }
+        },
+        "77:1C:4A:75:1F:46": {
+          "device": {
+            "address": "77:1C:4A:75:1F:46",
+            "name": null,
+            "rssi": -97,
+            "details": {
+              "source": "08:D1:F9:EF:45:58",
+              "address_type": 1
+            }
+          },
+          "advertisement_data": {
+            "local_name": null,
+            "manufacturer_data": {
+              "76": "160800d63a6c894c946a"
+            },
+            "service_data": {},
+            "service_uuids": [],
+            "rssi": -97,
+            "tx_power": -127,
+            "platform_data": []
+          }
+        },
+        "C4:06:12:00:21:1E": {
+          "device": {
+            "address": "C4:06:12:00:21:1E",
+            "name": "Amazfit GTR 2",
+            "rssi": -86,
+            "details": {
+              "source": "08:D1:F9:EF:45:58",
+              "address_type": 1
+            }
+          },
+          "advertisement_data": {
+            "local_name": "Amazfit GTR 2",
+            "manufacturer_data": {
+              "343": "02ffffffffffffffffffffffffffffffff02c4061200211e"
+            },
+            "service_data": {},
+            "service_uuids": [
+              "0000fee0-0000-1000-8000-00805f9b34fb"
+            ],
+            "rssi": -86,
+            "tx_power": -127,
+            "platform_data": []
+          }
+        }
+      },
+      "discovered_device_timestamps": {
+        "D0:64:3F:AE:A4:F0": 1724080224.515279,
+        "DF:E9:FC:48:7E:F4": 1724080223.5632806,
+        "3C:33:BD:12:59:55": 1724080224.8432784,
+        "67:16:D4:1D:27:20": 1724080224.8432784,
+        "77:1C:4A:75:1F:46": 1724080223.4872806,
+        "C4:06:12:00:21:1E": 1724080223.8192801
+      }
+    }
+  }
+}

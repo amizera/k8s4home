@@ -1,0 +1,172 @@
+# ---
+# apiVersion: v1
+# kind: Namespace
+# metadata:
+#   name: ubuntu
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   namespace: ha
+#   name: ubuntu
+# spec:
+#   selector:
+#     app: ubuntu
+#   type: LoadBalancer
+#   ports:
+#   - name: http
+#     protocol: TCP
+#     port: 80
+#     targetPort: 8123
+  # type: ClusterIP
+  # ports:
+  # - name: http
+  #   protocol: TCP
+  #   port: 80
+  #   targetPort: 8123
+# ---    
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: ingress-ubuntu
+#   namespace: ha
+#   annotations:
+#     traefik.ingress.kubernetes.io/router.entrypoints: web
+# spec:
+#   rules:
+#     - host: ha.48340.xyz
+#       http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: ubuntu
+#                 port:
+#                   number: 80
+#   tls:
+#     - hosts:
+#         - ha.48340.xyz
+#       secretName: longhorn-http-tls
+#   ingressClassName: traefik
+---
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: gfs-ha-local-volume
+#   namespace: ha
+#   labels:
+#     type: local
+# spec:
+#   storageClassName: manual
+#   capacity:
+#     storage: 10Gi
+#   accessModes:
+#     - ReadWriteOnce
+#   hostPath:
+#     path: "/data/ubuntu" # path to directory
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: gfs-ha-volume-claim
+#   labels:
+#     app: ubuntu
+#   namespace: ha
+# spec:
+#   storageClassName: manual
+#   accessModes:
+#     - ReadWriteOnce #  must be the same as PersistentVolume
+#   resources:
+#     requests:
+#       storage: 8Gi
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ubuntu-pvc
+  namespace: ha
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn-retain
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  namespace: ha
+  name: ubuntu
+  labels:
+    app: ubuntu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ubuntu
+  template:
+    metadata:
+      labels:
+        app: ubuntu
+    spec:
+      containers:
+      - name: ubuntu
+        image: ubuntu:noble
+        command:
+          - "sleep"
+          - "604800"
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          # limits:
+          #   memory: "768Mi"
+          #   cpu: "500m"                  
+        ports:
+        - containerPort: 8123
+        volumeMounts:
+        - mountPath: /config
+          name: ha-vol01
+        - mountPath: /config/configuration.yaml
+          subPath: configuration.yaml
+          name:  ha-configuration-cm
+        - mountPath: /config/scenes/scenes-cm.yaml
+          subPath: scenes-cm.yaml
+          name: ha-scenes-cm
+        - mountPath: /.dockerenv
+          name: volume-dockerenv
+        securityContext:
+          privileged: true
+      hostNetwork: true
+      volumes:
+      - name: ha-vol01
+        persistentVolumeClaim:
+          claimName: ubuntu-pvc
+      - name: media-volume
+        hostPath:
+          path: /tmp/media
+      - name: ha-configuration-cm
+        configMap:
+          name: ha-configuration-cm
+      - name: ha-automations-lights-cm
+        configMap:
+          name: ha-automations-lights-cm
+      - name: ha-scenes-cm
+        configMap:
+          name: ha-scenes-cm
+      - name: volume-dockerenv
+        emptyDir: {}
+      tolerations:
+        - key: "node.kubernetes.io/not-ready"
+          operator: "Exists"
+          effect: "NoExecute"
+          tolerationSeconds: 300
+      # affinity:
+      #   podAntiAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #     - labelSelector:
+      #         matchLabels:
+      #           app: ha
+      #       topologyKey: kubernetes.io/hostname

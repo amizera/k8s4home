@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace.dashboard_pompa",
+  "data": {
+    "config": {
+      "views": [
+        {
+          "title": "Home",
+          "cards": [
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "select.pompa_duza_moc"
+                },
+                {
+                  "entity": "switch.pompa_harmonogram_wakacyjny"
+                },
+                {
+                  "entity": "binary_sensor.pompa_odszranianie"
+                },
+                {
+                  "entity": "sensor.pompa_ogrzewanie_skumulowane_zuzycie_energii"
+                },
+                {
+                  "entity": "sensor.pompa_podgrzewanie_zbiornika_wody_skumulowane_zuzycie_energii"
+                },
+                {
+                  "entity": "sensor.pompa_skumulowane_zuzycie_energii"
+                },
+                {
+                  "entity": "climate.pompa_podloga"
+                },
+                {
+                  "entity": "binary_sensor.pompa_status"
+                },
+                {
+                  "entity": "water_heater.pompa_tank"
+                },
+                {
+                  "entity": "sensor.pompa_temperatura_zewnetrzna"
+                },
+                {
+                  "entity": "select.pompa_tryb_cichy"
+                },
+                {
+                  "entity": "switch.pompa_wymus_c_w_u"
+                },
+                {
+                  "entity": "switch.pompa_wymus_grzanie"
+                },
+                {
+                  "entity": "button.pompa_wymus_odszranianie"
+                },
+                {
+                  "entity": "sensor.pompa_ogrzewanie_zuzycie_energii"
+                },
+                {
+                  "entity": "sensor.pompa_podgrzewanie_zbiornika_wody_zuzycie_energii"
+                },
+                {
+                  "entity": "sensor.pompa_zuzycie_energii"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

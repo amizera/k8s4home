@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace.dashboard_wejscia",
+  "data": {
+    "config": {
+      "views": [
+        {
+          "title": "Home",
+          "cards": [
+            {
+              "type": "entity",
+              "entity": "lock.boneio_c_07_21a5c4_drzwi",
+              "name": "Elektro Zamek"
+            },
+            {
+              "type": "entity",
+              "entity": "binary_sensor.boneio_c_07_21a5c4_drzwi_wej_ciowe",
+              "name": "Drzwi Wejściowe"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

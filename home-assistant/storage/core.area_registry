@@ -1,0 +1,125 @@
+{
+  "version": 1,
+  "minor_version": 7,
+  "key": "core.area_registry",
+  "data": {
+    "areas": [
+      {
+        "aliases": [],
+        "floor_id": "parter",
+        "icon": null,
+        "id": "salon",
+        "labels": [],
+        "name": "Salon",
+        "picture": null,
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
+      },
+      {
+        "aliases": [],
+        "floor_id": "parter",
+        "icon": null,
+        "id": "kuchnia",
+        "labels": [],
+        "name": "Kuchnia",
+        "picture": null,
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
+      },
+      {
+        "aliases": [],
+        "floor_id": null,
+        "icon": null,
+        "id": "sypialnia",
+        "labels": [],
+        "name": "Sypialnia",
+        "picture": null,
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
+      },
+      {
+        "aliases": [],
+        "floor_id": "parter",
+        "icon": "mdi:web",
+        "id": "it",
+        "labels": [],
+        "name": "IT",
+        "picture": null,
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
+      },
+      {
+        "aliases": [],
+        "floor_id": "parter",
+        "icon": null,
+        "id": "gabinet",
+        "labels": [],
+        "name": "Gabinet",
+        "picture": null,
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
+      },
+      {
+        "aliases": [],
+        "floor_id": "parter",
+        "icon": null,
+        "id": "serwerownia",
+        "labels": [],
+        "name": "Serwerownia",
+        "picture": null,
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
+      },
+      {
+        "aliases": [],
+        "floor_id": null,
+        "icon": "mdi:home-lightning-bolt",
+        "id": "home_energy",
+        "labels": [
+          "energia"
+        ],
+        "name": "home_energy",
+        "picture": null,
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
+      },
+      {
+        "aliases": [],
+        "floor_id": "parter",
+        "icon": "mdi:door",
+        "id": "wejscie",
+        "labels": [],
+        "name": "Wejście",
+        "picture": null,
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
+      },
+      {
+        "aliases": [],
+        "floor_id": null,
+        "icon": "mdi:air-filter",
+        "id": "powietrze",
+        "labels": [
+          "czujnik"
+        ],
+        "name": "Powietrze",
+        "picture": null,
+        "created_at": "1970-01-01T00:00:00+00:00",
+        "modified_at": "1970-01-01T00:00:00+00:00"
+      },
+      {
+        "aliases": [],
+        "floor_id": null,
+        "icon": "mdi:window-closed-variant",
+        "id": "okna",
+        "labels": [
+          "okno"
+        ],
+        "name": "Okna",
+        "picture": null,
+        "created_at": "2024-10-21T13:09:41.204419+00:00",
+        "modified_at": "2024-10-21T13:09:41.204437+00:00"
+      }
+    ]
+  }
+}

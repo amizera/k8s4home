@@ -36,12 +36,12 @@ data:
     # - hostname: cam.48340.xyz
     #   service: http://restream.video.svc.cluster.local
     - hostname: ha.48340.xyz
-      service: http://home-assistant.home-assistant.svc.cluster.local
+      service: http://home-assistant.ha.svc.cluster.local
     # - hostname: k3s.48340.xyz
     #   service: https://kubernetes-dashboard.kubernetes-dashboard.svc.cluster.local
 
-    - hostname: 48340.xyz
-      service: http://wordpress.default.svc.cluster.local
+    # - hostname: 48340.xyz
+    #   service: http://wordpress.default.svc.cluster.local
     # - hostname: z2mqtt.48340.xyz
     #   service: http://z2mqtt.home-assistant.svc.cluster.local:31080
 

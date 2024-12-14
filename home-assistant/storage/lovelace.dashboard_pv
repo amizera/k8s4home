@@ -1,0 +1,154 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace.dashboard_pv",
+  "data": {
+    "config": {
+      "views": [
+        {
+          "title": "Home",
+          "cards": [
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "sensor.pv1_power"
+                },
+                {
+                  "entity": "sensor.pv1_voltage"
+                },
+                {
+                  "entity": "sensor.pv2_power"
+                },
+                {
+                  "entity": "sensor.pv2_voltage"
+                }
+              ]
+            },
+            {
+              "type": "history-graph",
+              "entities": [
+                {
+                  "entity": "sensor.pv1_power"
+                },
+                {
+                  "entity": "sensor.pv2_power"
+                }
+              ],
+              "title": "Moc Paneli",
+              "hours_to_show": 12
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "sensor.load_l1"
+                },
+                {
+                  "entity": "sensor.on_grid_l1_voltage"
+                },
+                {
+                  "entity": "sensor.on_grid_l1_power"
+                },
+                {
+                  "entity": "sensor.back_up_l1_voltage"
+                },
+                {
+                  "entity": "sensor.back_up_l1_power"
+                }
+              ],
+              "title": "L1"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "sensor.load_l2"
+                },
+                {
+                  "entity": "sensor.on_grid_l2_voltage"
+                },
+                {
+                  "entity": "sensor.on_grid_l2_power"
+                },
+                {
+                  "entity": "sensor.back_up_l2_voltage"
+                },
+                {
+                  "entity": "sensor.back_up_l2_power"
+                }
+              ],
+              "title": "L2"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "sensor.load_l3"
+                },
+                {
+                  "entity": "sensor.on_grid_l3_voltage"
+                },
+                {
+                  "entity": "sensor.on_grid_l3_power"
+                },
+                {
+                  "entity": "sensor.back_up_l3_voltage"
+                },
+                {
+                  "entity": "sensor.back_up_l3_power"
+                }
+              ],
+              "title": "L3"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "number.goodwe_depth_of_discharge_on_grid",
+                  "name": "Depth of discharge (on-grid)"
+                },
+                {
+                  "entity": "number.goodwe_grid_export_limit",
+                  "name": "Grid export limit"
+                },
+                {
+                  "entity": "button.goodwe_synchronize_inverter_clock",
+                  "name": "Synchronize inverter clock"
+                },
+                {
+                  "entity": "select.goodwe_tryb_pracy_falownika",
+                  "name": "Tryb pracy falownika"
+                }
+              ],
+              "title": "GoodWe"
+            },
+            {
+              "type": "tile",
+              "entity": "sensor.battery_state_of_charge",
+              "show_entity_picture": false,
+              "vertical": true,
+              "name": "Naładowanie Baterii"
+            },
+            {
+              "type": "history-graph",
+              "entities": [
+                {
+                  "entity": "sensor.load_l1"
+                },
+                {
+                  "entity": "sensor.load_l2"
+                },
+                {
+                  "entity": "sensor.load_l3"
+                }
+              ],
+              "title": "Obiążenie FAZ",
+              "hours_to_show": 1
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,32 @@
+alias: Rolety_OnOff_02
+description: sceny roletowe
+use_blueprint:
+  path: EPMatt/ikea_e1743.yaml
+  input:
+    integration: Zigbee2MQTT
+    controller_entity: sensor.onoff_02_action
+    helper_last_controller_event: input_text.lastevent_onoff_02
+    action_button_up_short:
+      - action: scene.turn_on
+        metadata: {}
+        target:
+          entity_id: scene.r100pro
+        data: {}
+    action_button_up_long:
+      - action: scene.turn_on
+        metadata: {}
+        target:
+          entity_id: scene.r55pro
+        data: {}
+    action_button_down_short:
+      - action: scene.turn_on
+        metadata: {}
+        target:
+          entity_id: scene.r0pro
+        data: {}
+    action_button_down_long:
+      - action: scene.turn_on
+        metadata: {}
+        target:
+          entity_id: scene.r25pro
+        data: {}

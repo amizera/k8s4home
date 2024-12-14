@@ -31,12 +31,12 @@ spec:
           - containerPort: 9100
             protocol: TCP
         resources:
-          limits:
-            cpu: 250m
-            memory: 180Mi
+          # limits:
+          #   cpu: "250m"
+          #   memory: "256Mi"
           requests:
-            cpu: 102m
-            memory: 180Mi
+            cpu: "50m"
+            memory: "128Mi"
         volumeMounts:
         - mountPath: /host/sys
           mountPropagation: HostToContainer

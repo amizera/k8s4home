@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace_dashboards",
+  "data": {
+    "items": [
+      {
+        "id": "map",
+        "icon": "mdi:map",
+        "title": "Mapa",
+        "url_path": "map",
+        "show_in_sidebar": true,
+        "require_admin": false,
+        "mode": "storage"
+      },
+      {
+        "id": "dashboard_rolety",
+        "show_in_sidebar": true,
+        "icon": "mdi:window-shutter",
+        "title": "Rolety",
+        "require_admin": false,
+        "mode": "storage",
+        "url_path": "dashboard-rolety"
+      },
+      {
+        "id": "dashboard_swiatla",
+        "show_in_sidebar": true,
+        "icon": "mdi:lightbulb",
+        "title": "Światła",
+        "require_admin": false,
+        "mode": "storage",
+        "url_path": "dashboard-swiatla"
+      },
+      {
+        "id": "dashboard_wejscia",
+        "show_in_sidebar": true,
+        "icon": "mdi:shield-lock",
+        "title": "Wejścia ",
+        "require_admin": false,
+        "mode": "storage",
+        "url_path": "dashboard-wejscia"
+      },
+      {
+        "id": "dashboard_zigbee2mqtt",
+        "show_in_sidebar": true,
+        "icon": "mdi:zigbee",
+        "title": "Zigbee2MQTT-01",
+        "require_admin": true,
+        "mode": "storage",
+        "url_path": "dashboard-zigbee2mqtt"
+      },
+      {
+        "id": "dashboard_pompa",
+        "show_in_sidebar": true,
+        "icon": "mdi:heat-pump",
+        "title": "Pompa",
+        "require_admin": false,
+        "mode": "storage",
+        "url_path": "dashboard-pompa"
+      },
+      {
+        "id": "dashboard_wykresy",
+        "show_in_sidebar": true,
+        "icon": "mdi:chart-areaspline",
+        "title": "Wykresy",
+        "require_admin": false,
+        "mode": "storage",
+        "url_path": "dashboard-wykresy"
+      },
+      {
+        "id": "dashboard_czujniki",
+        "show_in_sidebar": true,
+        "title": "Czujniki",
+        "require_admin": false,
+        "mode": "storage",
+        "url_path": "dashboard-czujniki",
+        "icon": "mdi:leak"
+      },
+      {
+        "id": "dashboard_okna",
+        "show_in_sidebar": true,
+        "icon": "mdi:window-closed-variant",
+        "title": "Okna",
+        "require_admin": false,
+        "mode": "storage",
+        "url_path": "dashboard-okna"
+      },
+      {
+        "id": "dashboard_pv",
+        "show_in_sidebar": true,
+        "icon": "mdi:solar-power-variant",
+        "title": "PV",
+        "require_admin": false,
+        "mode": "storage",
+        "url_path": "dashboard-pv"
+      },
+      {
+        "id": "zigbee2mqtt_02",
+        "show_in_sidebar": true,
+        "icon": "mdi:zigbee",
+        "title": "Zigbee2MQTT-02",
+        "require_admin": true,
+        "mode": "storage",
+        "url_path": "zigbee2mqtt-02"
+      }
+    ]
+  }
+}

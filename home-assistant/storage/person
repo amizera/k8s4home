@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "minor_version": 1,
+  "key": "person",
+  "data": {
+    "items": [
+      {
+        "id": "adam",
+        "name": "Adam",
+        "user_id": "0ef396aa0c9f4459bcedb4b968894f1b",
+        "device_trackers": [
+          "device_tracker.g3n3zyp",
+          "device_tracker.g3n3zyp2",
+          "device_tracker.mac_mini_app",
+          "device_tracker.sm_g780g"
+        ],
+        "picture": null
+      }
+    ]
+  }
+}

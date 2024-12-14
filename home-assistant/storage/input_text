@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "input_text",
+  "data": {
+    "items": [
+      {
+        "id": "lastcontrollerevent",
+        "name": "LastControllerEvent",
+        "max": 100,
+        "mode": "text",
+        "min": 0
+      },
+      {
+        "id": "lastcontrollerevents_onoff_03",
+        "name": "LastControllerEvents_OnOff_03",
+        "mode": "text",
+        "min": 0,
+        "max": 100
+      },
+      {
+        "id": "lastcontrollerevents_onoff_02",
+        "name": "LastControllerEvents_OnOff_02",
+        "mode": "text",
+        "max": 100,
+        "min": 0
+      },
+      {
+        "id": "helper_last_controller_event",
+        "name": "helper_last_controller_event",
+        "max": 200,
+        "mode": "text",
+        "min": 0
+      },
+      {
+        "id": "lastinput_dzwonek_01",
+        "name": "LastInput_Dzwonek_01",
+        "icon": "mdi:bell-outline",
+        "mode": "text",
+        "min": 0,
+        "max": 100
+      },
+      {
+        "id": "lastevent_onoff_04",
+        "name": "LastEvent_OnOff_04",
+        "mode": "text",
+        "min": 0,
+        "max": 100
+      },
+      {
+        "id": "lastevent_onoff_02",
+        "name": "LastEvent_OnOff_02",
+        "mode": "text",
+        "min": 0,
+        "max": 100
+      },
+      {
+        "id": "lastevent_onoff_01",
+        "name": "LastEvent_OnOff_01",
+        "mode": "text",
+        "min": 0,
+        "max": 100
+      },
+      {
+        "id": "lastevent_onoff_03",
+        "name": "LastEvent_OnOff_03",
+        "mode": "text",
+        "min": 0,
+        "max": 100
+      },
+      {
+        "id": "lastevent_onoff_05",
+        "name": "LastEvent_OnOff_05",
+        "min": 0,
+        "max": 100,
+        "mode": "text"
+      },
+      {
+        "id": "lastevent_ctrl_01",
+        "name": "LastEvent_Ctrl_01",
+        "min": 0,
+        "max": 100,
+        "mode": "text"
+      }
+    ]
+  }
+}

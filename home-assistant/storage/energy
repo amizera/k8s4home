@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "energy",
+  "data": {
+    "energy_sources": [
+      {
+        "type": "grid",
+        "flow_from": [
+          {
+            "stat_energy_from": "sensor.meter_total_energy_import",
+            "stat_cost": null,
+            "entity_energy_price": null,
+            "number_energy_price": null
+          }
+        ],
+        "flow_to": [
+          {
+            "stat_energy_to": "sensor.meter_total_energy_export",
+            "stat_compensation": null,
+            "entity_energy_price": null,
+            "number_energy_price": null
+          }
+        ],
+        "cost_adjustment_day": 0.0
+      },
+      {
+        "type": "solar",
+        "stat_energy_from": "sensor.total_pv_generation",
+        "config_entry_solar_forecast": [
+          "3904a28af84232190e651a0efb45ca01",
+          "76f1816dd5ce17ac50cc920c8b3cda48"
+        ]
+      },
+      {
+        "type": "battery",
+        "stat_energy_from": "sensor.today_battery_discharge",
+        "stat_energy_to": "sensor.today_battery_charge"
+      }
+    ],
+    "device_consumption": [
+      {
+        "stat_consumption": "sensor.pompa_ogrzewanie_skumulowane_zuzycie_energii",
+        "name": "Ogrzewanie"
+      },
+      {
+        "stat_consumption": "sensor.pompa_podgrzewanie_zbiornika_wody_skumulowane_zuzycie_energii",
+        "name": "CWU"
+      }
+    ]
+  }
+}

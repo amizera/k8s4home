@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace.dashboard_wykresy",
+  "data": {
+    "config": {
+      "views": [
+        {
+          "title": "Home",
+          "cards": [
+            {
+              "type": "history-graph",
+              "entities": [
+                {
+                  "entity": "sensor.energy_production_today_3"
+                },
+                {
+                  "entity": "sensor.today_s_pv_generation"
+                }
+              ],
+              "title": "ProdukcjaVsPrognoza",
+              "hours_to_show": 96
+            },
+            {
+              "chart_type": "line",
+              "period": "day",
+              "type": "statistics-graph",
+              "entities": [
+                "sensor.power_production_now_2"
+              ],
+              "stat_types": [
+                "mean",
+                "min",
+                "max"
+              ]
+            },
+            {
+              "type": "history-graph",
+              "entities": [
+                {
+                  "entity": "climate.pompa_podloga"
+                },
+                {
+                  "entity": "sensor.load_l3"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

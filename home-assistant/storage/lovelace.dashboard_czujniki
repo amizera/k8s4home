@@ -1,0 +1,250 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace.dashboard_czujniki",
+  "data": {
+    "config": {
+      "views": [
+        {
+          "title": "Home",
+          "cards": [],
+          "type": "sections",
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading_style": "title",
+                  "heading": "w Domu i na Polu"
+                },
+                {
+                  "type": "vertical-stack",
+                  "cards": [
+                    {
+                      "type": "entities",
+                      "entities": [
+                        {
+                          "entity": "sensor.temp_04_temperature_2",
+                          "secondary_info": "last-updated"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "history-graph",
+                      "entities": [
+                        {
+                          "entity": "sensor.temp_04_temperature_2"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "history-graph",
+                      "entities": [
+                        {
+                          "entity": "sensor.temp_04_humidity_2"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "history-graph",
+                      "entities": [
+                        {
+                          "entity": "sensor.temp_04_pressure_2"
+                        }
+                      ]
+                    }
+                  ],
+                  "title": "Salon"
+                },
+                {
+                  "square": false,
+                  "type": "grid",
+                  "cards": [
+                    {
+                      "type": "entities",
+                      "entities": [
+                        {
+                          "entity": "sensor.temp_01_temperature",
+                          "name": "Temperatura",
+                          "secondary_info": "last-updated"
+                        },
+                        {
+                          "entity": "sensor.temp_01_humidity",
+                          "name": "Wilgotność",
+                          "secondary_info": "last-updated"
+                        },
+                        {
+                          "entity": "sensor.temp_01_pressure",
+                          "name": "Ciśnienie atmosferyczne",
+                          "secondary_info": "last-updated"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "history-graph",
+                      "entities": [
+                        {
+                          "entity": "sensor.temp_01_temperature",
+                          "name": "Temperatura"
+                        },
+                        {
+                          "entity": "sensor.temp_01_humidity",
+                          "name": "Wilgotność"
+                        },
+                        {
+                          "entity": "sensor.temp_01_pressure",
+                          "name": "Ciśnienie atmosferyczne"
+                        }
+                      ]
+                    }
+                  ],
+                  "columns": 1,
+                  "title": "Studzienka Wodomierzowa"
+                },
+                {
+                  "type": "vertical-stack",
+                  "cards": [
+                    {
+                      "type": "entities",
+                      "entities": [
+                        {
+                          "entity": "sensor.temp_02_temperature",
+                          "secondary_info": "last-updated"
+                        },
+                        {
+                          "entity": "sensor.temp_02_humidity",
+                          "secondary_info": "last-updated"
+                        },
+                        {
+                          "entity": "sensor.temp_02_pressure",
+                          "secondary_info": "last-updated"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "history-graph",
+                      "entities": [
+                        {
+                          "entity": "sensor.temp_02_temperature"
+                        },
+                        {
+                          "entity": "sensor.temp_02_humidity"
+                        },
+                        {
+                          "entity": "sensor.temp_02_pressure"
+                        }
+                      ]
+                    }
+                  ],
+                  "title": "Piętro"
+                },
+                {
+                  "type": "vertical-stack",
+                  "cards": [
+                    {
+                      "type": "entities",
+                      "entities": [
+                        {
+                          "entity": "sensor.pompa_temperatura_zewnetrzna",
+                          "name": "Temperatura zewnętrzna",
+                          "secondary_info": "last-updated"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "history-graph",
+                      "entities": [
+                        {
+                          "entity": "sensor.pompa_temperatura_zewnetrzna"
+                        }
+                      ]
+                    }
+                  ],
+                  "title": "Pompa Ciepła"
+                },
+                {
+                  "type": "vertical-stack",
+                  "cards": [
+                    {
+                      "type": "entities",
+                      "entities": [
+                        {
+                          "entity": "sensor.temp_03_temperature",
+                          "secondary_info": "last-updated"
+                        },
+                        {
+                          "entity": "sensor.temp_03_humidity",
+                          "secondary_info": "last-updated"
+                        },
+                        {
+                          "entity": "sensor.temp_03_pressure",
+                          "secondary_info": "last-updated"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "history-graph",
+                      "entities": [
+                        {
+                          "entity": "sensor.temp_03_temperature"
+                        },
+                        {
+                          "entity": "sensor.temp_03_humidity"
+                        },
+                        {
+                          "entity": "sensor.temp_03_pressure"
+                        }
+                      ]
+                    }
+                  ],
+                  "title": "Strych"
+                }
+              ],
+              "column_span": 2
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Baterie",
+                  "heading_style": "title"
+                },
+                {
+                  "type": "entities",
+                  "entities": [
+                    {
+                      "entity": "sensor.temp_04_battery_2",
+                      "secondary_info": "last-updated"
+                    },
+                    {
+                      "entity": "sensor.temp_03_battery",
+                      "secondary_info": "last-updated"
+                    },
+                    {
+                      "entity": "sensor.temp_02_battery",
+                      "secondary_info": "last-updated"
+                    },
+                    {
+                      "entity": "sensor.temp_01_battery",
+                      "secondary_info": "last-updated"
+                    },
+                    {
+                      "entity": "sensor.ctrl_01_battery",
+                      "secondary_info": "last-updated"
+                    },
+                    {
+                      "entity": "sensor.ruch_01_battery",
+                      "secondary_info": "last-updated"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

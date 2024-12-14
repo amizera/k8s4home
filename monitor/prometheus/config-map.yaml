@@ -89,8 +89,14 @@ data:
           action: replace
           target_label: kubernetes_pod_name
       - job_name: 'kube-state-metrics'
+        honor_timestamps: true
+        metrics_path: /metrics
+        scheme: http
         static_configs:
           - targets: ['kube-state-metrics.kube-system.svc.cluster.local:8080']
+        metric_relabel_configs:
+        - target_label: cluster
+          replacement: k3s-cluster
       - job_name: 'kubernetes-cadvisor'
         scheme: https
         tls_config:

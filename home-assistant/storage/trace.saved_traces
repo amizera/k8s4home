@@ -1,0 +1,233 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "trace.saved_traces",
+  "data": {
+    "automation.1728388900788": [
+      {
+        "extended_dict": {
+          "last_step": "action/0/default/0",
+          "run_id": "cbccc089229da6e0378e7dc90d2451ba",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2024-12-07T18:15:51.900432+00:00",
+            "finish": "2024-12-07T18:15:51.940893+00:00"
+          },
+          "domain": "automation",
+          "item_id": "1728388900788",
+          "trigger": "Home Assistant starting",
+          "trace": {
+            "trigger/1": [
+              {
+                "path": "trigger/1",
+                "timestamp": "2024-12-07T18:15:51.923107+00:00",
+                "changed_variables": {
+                  "this": {
+                    "entity_id": "automation.closedoorafterrestart",
+                    "state": "on",
+                    "attributes": {
+                      "id": "1728388900788",
+                      "last_triggered": "2024-12-06T23:00:02.235769+00:00",
+                      "mode": "single",
+                      "current": 0,
+                      "friendly_name": "CloseDoorAfterRestart"
+                    },
+                    "last_changed": "2024-12-07T18:14:17.802647+00:00",
+                    "last_reported": "2024-12-07T18:14:17.802647+00:00",
+                    "last_updated": "2024-12-07T18:14:17.802647+00:00",
+                    "context": {
+                      "id": "01JEH58PYAGRSBBMQ4861B1TCR",
+                      "parent_id": null,
+                      "user_id": null
+                    }
+                  },
+                  "trigger": {
+                    "id": "1",
+                    "idx": "1",
+                    "alias": null,
+                    "platform": "homeassistant",
+                    "event": "start",
+                    "description": "Home Assistant starting"
+                  },
+                  "off_time": "00:00:01",
+                  "on_time": "00:00:02",
+                  "trigger_at_homeassistant_startup": true,
+                  "time_fmt": "%H:%M:%S",
+                  "first_event": "00:00:01",
+                  "second_event": "00:00:02"
+                }
+              }
+            ],
+            "condition/0": [
+              {
+                "path": "condition/0",
+                "timestamp": "2024-12-07T18:15:51.923309+00:00",
+                "result": {
+                  "result": true,
+                  "entities": []
+                }
+              }
+            ],
+            "action/0": [
+              {
+                "path": "action/0",
+                "timestamp": "2024-12-07T18:15:51.925043+00:00",
+                "changed_variables": {
+                  "context": {
+                    "id": "01JEH5BJTW6T3D9JSDBK38MB6R",
+                    "parent_id": null,
+                    "user_id": null
+                  }
+                },
+                "result": {
+                  "choice": "default"
+                }
+              }
+            ],
+            "action/0/choose/0": [
+              {
+                "path": "action/0/choose/0",
+                "timestamp": "2024-12-07T18:15:51.925945+00:00",
+                "result": {
+                  "result": false
+                }
+              }
+            ],
+            "action/0/choose/0/conditions/0": [
+              {
+                "path": "action/0/choose/0/conditions/0",
+                "timestamp": "2024-12-07T18:15:51.926450+00:00",
+                "result": {
+                  "result": false,
+                  "entities": []
+                }
+              }
+            ],
+            "action/0/default/0": [
+              {
+                "path": "action/0/default/0",
+                "timestamp": "2024-12-07T18:15:51.929014+00:00",
+                "result": {
+                  "params": {
+                    "domain": "homeassistant",
+                    "service": "turn_on",
+                    "service_data": {},
+                    "target": {
+                      "entity_id": [
+                        "lock.boneio_c_07_21a5c4_drzwi"
+                      ]
+                    }
+                  },
+                  "running_script": false
+                }
+              }
+            ]
+          },
+          "config": {
+            "variables": {
+              "off_time": "00:00:01",
+              "on_time": "00:00:02",
+              "trigger_at_homeassistant_startup": true,
+              "time_fmt": "%H:%M:%S",
+              "first_event": "{{ on_time if strptime(on_time,time_fmt).time() < strptime(off_time,time_fmt).time() else off_time }}",
+              "second_event": "{{ on_time if strptime(on_time,time_fmt).time() >= strptime(off_time,time_fmt).time() else off_time }}"
+            },
+            "mode": "single",
+            "max_exceeded": "silent",
+            "triggers": [
+              {
+                "platform": "time",
+                "at": [
+                  "00:00:02",
+                  "00:00:01"
+                ]
+              },
+              {
+                "platform": "homeassistant",
+                "event": "start"
+              },
+              {
+                "platform": "event",
+                "event_type": ""
+              }
+            ],
+            "conditions": [
+              {
+                "condition": "template",
+                "value_template": "{{ trigger.platform!=\"homeassistant\" or trigger_at_homeassistant_startup }}"
+              }
+            ],
+            "actions": [
+              {
+                "choose": [
+                  {
+                    "conditions": [
+                      {
+                        "condition": "template",
+                        "value_template": "{{ now().time() >= strptime(first_event,time_fmt).time() and now().time() < strptime(second_event,time_fmt).time() }}"
+                      }
+                    ],
+                    "sequence": [
+                      {
+                        "target": {
+                          "entity_id": "lock.boneio_c_07_21a5c4_drzwi"
+                        },
+                        "action": "homeassistant.{{ \"turn_on\" if first_event == on_time else \"turn_off\"}}"
+                      }
+                    ]
+                  }
+                ],
+                "default": [
+                  {
+                    "target": {
+                      "entity_id": "lock.boneio_c_07_21a5c4_drzwi"
+                    },
+                    "action": "homeassistant.{{ \"turn_on\" if second_event == on_time else \"turn_off\"}}"
+                  }
+                ]
+              }
+            ],
+            "id": "1728388900788",
+            "alias": "CloseDoorAfterRestart",
+            "description": ""
+          },
+          "blueprint_inputs": {
+            "id": "1728388900788",
+            "alias": "CloseDoorAfterRestart",
+            "description": "",
+            "use_blueprint": {
+              "path": "EPMatt/on_off_schedule_state_persistence.yaml",
+              "input": {
+                "automation_target": {
+                  "entity_id": "lock.boneio_c_07_21a5c4_drzwi"
+                },
+                "trigger_at_homeassistant_startup": true,
+                "on_time": "00:00:02",
+                "off_time": "00:00:01"
+              }
+            }
+          },
+          "context": {
+            "id": "01JEH5BJTW6T3D9JSDBK38MB6R",
+            "parent_id": null,
+            "user_id": null
+          }
+        },
+        "short_dict": {
+          "last_step": "action/0/default/0",
+          "run_id": "cbccc089229da6e0378e7dc90d2451ba",
+          "state": "stopped",
+          "script_execution": "finished",
+          "timestamp": {
+            "start": "2024-12-07T18:15:51.900432+00:00",
+            "finish": "2024-12-07T18:15:51.940893+00:00"
+          },
+          "domain": "automation",
+          "item_id": "1728388900788",
+          "trigger": "Home Assistant starting"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+alias: Łazienka_OnOFF_04
+description: ""
+use_blueprint:
+  path: EPMatt/ikea_e1743.yaml
+  input:
+    integration: Zigbee2MQTT
+    controller_entity: sensor.onoff_04_action
+    helper_last_controller_event: input_text.lastevent_onoff_04
+    action_button_up_short:
+      - action: light.toggle
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.boneio_32_l_06_76f0b4_azienka_d
+    action_button_down_short:
+      - action: cover.toggle
+        metadata: {}
+        data: {}
+        target:
+          entity_id: cover.boneio_c_07_21a5c4_azienka
+    action_button_down_long:
+      - action: cover.toggle
+        metadata: {}
+        data: {}
+        target:
+          entity_id: cover.boneio_c_07_21a5c4_pralnia
+    action_button_up_long: []

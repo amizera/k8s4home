@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "http",
+  "data": {
+    "use_x_forwarded_for": true,
+    "trusted_proxies": [
+      "10.0.0.0",
+      "173.245.48.0",
+      "103.21.244.0",
+      "103.22.200.0",
+      "103.31.4.0",
+      "141.101.64.0",
+      "108.162.192.0",
+      "190.93.240.0",
+      "188.114.96.0",
+      "197.234.240.0",
+      "198.41.128.0",
+      "162.158.0.0",
+      "104.16.0.0",
+      "104.24.0.0",
+      "172.64.0.0",
+      "131.0.72.0",
+      "2400:cb00::",
+      "2606:4700::",
+      "2803:f800::",
+      "2405:b500::",
+      "2405:8100::",
+      "2a06:98c0::",
+      "2c0f:f248::"
+    ],
+    "server_host": [
+      "0.0.0.0",
+      "::"
+    ],
+    "login_attempts_threshold": -1,
+    "use_x_frame_options": true,
+    "server_port": 8123,
+    "ip_ban_enabled": true,
+    "ssl_profile": "modern",
+    "cors_allowed_origins": [
+      "https://cast.home-assistant.io"
+    ]
+  }
+}

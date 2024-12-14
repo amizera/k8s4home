@@ -1,0 +1,20 @@
+alias: Świtła_OnOff_01
+description: ""
+use_blueprint:
+  path: EPMatt/ikea_e1743.yaml
+  input:
+    integration: Zigbee2MQTT
+    controller_entity: sensor.onoff_01_action
+    helper_last_controller_event: input_text.lastevent_onoff_01
+    action_button_up_short:
+      - action: light.turn_on
+        metadata: {}
+        data: {}
+        target:
+          label_id: swiatlo
+    action_button_down_short:
+      - action: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          label_id: swiatlo

@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: home-assistant
+  namespace: ha
   name: z2mqtt-02
 spec:
   selector:
@@ -17,8 +17,8 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: longhorn-z2mqtt-02-volume-claim
-  namespace: home-assistant
+  name: z2mqtt-02-vol01
+  namespace: ha
 spec:
   accessModes:
     - ReadWriteOnce
@@ -31,7 +31,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: z2mqtt-02-ingress
-  namespace: home-assistant
+  namespace: ha
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt"
 spec:
@@ -55,7 +55,7 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  namespace: home-assistant
+  namespace: ha
   name: z2mqtt-02
   labels:
     app: z2mqtt-02
@@ -82,12 +82,12 @@ spec:
         image: koenkk/zigbee2mqtt:latest
         imagePullPolicy: Always
         resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
           limits:
-            memory: "1Gi"
-            cpu: "1000m"
-          requests: 
-            memory: 500M
-            cpu: "500m"             
+            memory: "128Mi"
+            cpu: "500m"            
         env:
           - name: TZ
             value: Europe/Warsaw
@@ -148,7 +148,7 @@ spec:
           containerPort: 8080
           protocol: TCP
         volumeMounts:
-        - name: longhorn-z2mqtt-02-volume
+        - name: z2mqtt-02-volume
           mountPath: /app/data
         # - name: z2mqtt-02-config
         #   mountPath: /app/data/configuration.yaml
@@ -166,9 +166,9 @@ spec:
         #   privileged: true
       hostNetwork: true
       volumes:
-        - name: longhorn-z2mqtt-02-volume
+        - name: z2mqtt-02-volume
           persistentVolumeClaim:
-            claimName: longhorn-z2mqtt-02-volume-claim
+            claimName: z2mqtt-02-vol01
         - name: z2mqtt-02-udev
           hostPath:
             path: /run/udev
