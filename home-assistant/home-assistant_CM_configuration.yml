@@ -47,4 +47,39 @@ data:
         - 2c0f:f248::/32
     homeassistant:
       customize: !include customize.yaml
-      
+    influxdb:
+      api_version: 2
+      ssl: false
+      host: 10.0.0.103
+      port: 8086
+      token: -wVPsmk6flrZaNuIJ1ieqfQ7F0iLtzFj-8MMxckXaellrY5neu3GLpA1eJPJTJ2wgX0e9_pldM_-BHvXZnvKvA==
+      organization: gampnet
+      bucket: ha
+      tags:
+        source: HA
+      tags_attributes:
+        - friendly_name
+      default_measurement: units
+      include:
+        entities:
+          - weather.forecast_dom
+          - sensor.pompa_temperatura_zewnetrzna
+          - sensor.sensor_klimatu_01_bme680_temperatura
+          - sensor.temp_01_temperature
+          - sensor.temp_01_pressure
+          - sensor.temp_01_humidity
+          - sensor.temp_01_battery
+          - sensor.temp_02_temperature
+          - sensor.temp_02_pressure
+          - sensor.temp_02_humidity
+          - sensor.temp_02_battery
+          - sensor.temp_03_temperature
+          - sensor.temp_03_pressure
+          - sensor.temp_03_humidity
+          - sensor.temp_03_battery
+          - sensor.temp_04_temperature
+          - sensor.temp_04_pressure
+          - sensor.temp_04_humidity
+          - sensor.temp_04_battery
+          - binary_sensor.pracujoncy
+
