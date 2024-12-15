@@ -152,9 +152,9 @@ spec:
       - name: ha-vol01
         persistentVolumeClaim:
           claimName: home-assistant-pvc
-      - name: media-volume
-        hostPath:
-          path: /tmp/media
+      # - name: media-volume
+      #   hostPath:
+      #     path: /tmp/media
       - name: ha-configuration-cm
         configMap:
           name: ha-configuration-cm
