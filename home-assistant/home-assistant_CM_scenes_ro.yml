@@ -72,21 +72,21 @@ data:
           friendly_name: Salon_HS_Fix
           supported_features: 15
           state: open
-        cover.boneio_cover_sypialnia_zachod:
+        cover.boneio_cover_sypialnia_zach_d:
           current_position: 25
           assumed_state: true
           device_class: blind
           friendly_name: Sypialnia Zachód:
           supported_features: 15
           state: open
-        cover.boneio_cover_sypialnia_wschod:
+        cover.boneio_cover_sypialnia_wsch_d:
           current_position: 25
           assumed_state: true
           device_class: blind
           friendly_name: Sypialnia Wschód
           supported_features: 15
           state: open         
-        cover.boneio_cover_sypialnia_poludnie:
+        cover.boneio_cover_sypialnia_po_udnie:
           current_position: 25
           assumed_state: true
           device_class: blind
@@ -113,11 +113,11 @@ data:
           entity_only: true
         cover.boneio_cover_salon_hs_fix:
           entity_only: true
-        cover.boneio_cover_sypialnia_zachod:
+        cover.boneio_cover_sypialnia_zach_d:
           entity_only: true
-        cover.boneio_cover_sypialnia_wschod:
+        cover.boneio_cover_sypialnia_wsch_d:
           entity_only: true                   
-        cover.boneio_cover_sypialnia_poludnie:
+        cover.boneio_cover_sypialnia_po_udnie:
           entity_only: true                   
     - name: R55PRO
       entities:
@@ -184,21 +184,21 @@ data:
           friendly_name: Salon_HS_Fix
           supported_features: 15
           state: open
-        cover.boneio_cover_sypialnia_zachod:
+        cover.boneio_cover_sypialnia_zach_d:
           current_position: 55
           assumed_state: true
           device_class: blind
           friendly_name: Sypialnia Zachód:
           supported_features: 15
           state: open
-        cover.boneio_cover_sypialnia_wschod:
+        cover.boneio_cover_sypialnia_wsch_d:
           current_position: 55
           assumed_state: true
           device_class: blind
           friendly_name: Sypialnia Wschód
           supported_features: 15
           state: open          
-        cover.boneio_cover_sypialnia_poludnie:
+        cover.boneio_cover_sypialnia_po_udnie:
           current_position: 55
           assumed_state: true
           device_class: blind
@@ -225,11 +225,11 @@ data:
           entity_only: true
         cover.boneio_cover_salon_hs_fix:
           entity_only: true
-        cover.boneio_cover_sypialnia_zachod:
+        cover.boneio_cover_sypialnia_zach_d:
           entity_only: true
-        cover.boneio_cover_sypialnia_wschod:
+        cover.boneio_cover_sypialnia_wsch_d:
           entity_only: true          
-        cover.boneio_cover_sypialnia_poludnie:
+        cover.boneio_cover_sypialnia_po_udnie:
           entity_only: true           
     - name: R100PRO
       entities:
@@ -296,21 +296,21 @@ data:
           friendly_name: Salon_HS_Fix
           supported_features: 15
           state: open
-        cover.boneio_cover_sypialnia_zachod:
+        cover.boneio_cover_sypialnia_zach_d:
           current_position: 100
           assumed_state: true
           device_class: blind
           friendly_name: Sypialnia Zachód:
           supported_features: 15
           state: open
-        cover.boneio_cover_sypialnia_wschod:
+        cover.boneio_cover_sypialnia_wsch_d:
           current_position: 100
           assumed_state: true
           device_class: blind
           friendly_name: Sypialnia Wschód
           supported_features: 15
           state: open          
-        cover.boneio_cover_sypialnia_poludnie:
+        cover.boneio_cover_sypialnia_po_udnie:
           current_position: 100
           assumed_state: true
           device_class: blind
@@ -337,11 +337,11 @@ data:
           entity_only: true
         cover.boneio_cover_salon_hs_fix:
           entity_only: true
-        cover.boneio_cover_sypialnia_zachod:
+        cover.boneio_cover_sypialnia_zach_d:
           entity_only: true
-        cover.boneio_cover_sypialnia_wschod:
+        cover.boneio_cover_sypialnia_wsch_d:
           entity_only: true          
-        cover.boneio_cover_sypialnia_poludnie:
+        cover.boneio_cover_sypialnia_po_udnie:
           entity_only: true           
     - name: R0PRO
       entities:
@@ -408,21 +408,21 @@ data:
           friendly_name: Salon_HS_Fix
           supported_features: 15
           state: open
-        cover.boneio_cover_sypialnia_zachod:
+        cover.boneio_cover_sypialnia_zach_d:
           current_position: 0
           assumed_state: true
           device_class: blind
           friendly_name: Sypialnia Zachód:
           supported_features: 15
           state: open
-        cover.boneio_cover_sypialnia_wschod:
+        cover.boneio_cover_sypialnia_wsch_d:
           current_position: 0
           assumed_state: true
           device_class: blind
           friendly_name: Sypialnia Wschód
           supported_features: 15
           state: open
-        cover.boneio_cover_sypialnia_poludnie:
+        cover.boneio_cover_sypialnia_po_udnie:
           current_position: 0
           assumed_state: true
           device_class: blind
@@ -449,10 +449,10 @@ data:
           entity_only: true
         cover.boneio_cover_salon_hs_fix:
           entity_only: true
-        cover.boneio_cover_sypialnia_zachod:
+        cover.boneio_cover_sypialnia_zach_d:
           entity_only: true
-        cover.boneio_cover_sypialnia_wschod:
+        cover.boneio_cover_sypialnia_wsch_d:
           entity_only: true          
-        cover.boneio_cover_sypialnia_poludnie:
+        cover.boneio_cover_sypialnia_po_udnie:
           entity_only: true           
  
