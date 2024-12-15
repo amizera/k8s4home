@@ -76,7 +76,7 @@ data:
           current_position: 25
           assumed_state: true
           device_class: blind
-          friendly_name: Sypialnia Zachód:
+          friendly_name: Sypialnia Zachód
           supported_features: 15
           state: open
         cover.boneio_cover_sypialnia_wsch_d:
@@ -188,7 +188,7 @@ data:
           current_position: 55
           assumed_state: true
           device_class: blind
-          friendly_name: Sypialnia Zachód:
+          friendly_name: Sypialnia Zachód
           supported_features: 15
           state: open
         cover.boneio_cover_sypialnia_wsch_d:
@@ -300,7 +300,7 @@ data:
           current_position: 100
           assumed_state: true
           device_class: blind
-          friendly_name: Sypialnia Zachód:
+          friendly_name: Sypialnia Zachód
           supported_features: 15
           state: open
         cover.boneio_cover_sypialnia_wsch_d:
@@ -412,7 +412,7 @@ data:
           current_position: 0
           assumed_state: true
           device_class: blind
-          friendly_name: Sypialnia Zachód:
+          friendly_name: Sypialnia Zachód
           supported_features: 15
           state: open
         cover.boneio_cover_sypialnia_wsch_d:
