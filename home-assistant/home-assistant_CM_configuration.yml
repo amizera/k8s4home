@@ -82,4 +82,27 @@ data:
           - sensor.temp_04_humidity
           - sensor.temp_04_battery
           - binary_sensor.pracujoncy
-
+          - sensor.twodypodloga
+          - calendar.g13
+    # climate:
+    #   - platform: smart_thermostat
+    #     name: Smart Thermostat Multiple Valves Example
+    #     unique_id: smart_thermostat_m_valve_example
+    #     heater:
+    #       - valve.radiator_valve_1
+    #       - valve.radiator_valve_2
+    #       - valve.radiator_valve_3
+    #     target_sensor: sensor.ambient_temperature
+    #     min_temp: 7
+    #     max_temp: 28
+    #     ac_mode: False
+    #     target_temp: 19
+    #     keep_alive:
+    #       seconds: 60
+    #     away_temp: 14
+    #     kp: 5
+    #     ki: 0.01
+    #     kd: 500
+    #     output_min: 0
+    #     output_max: 99
+    #     pwm: 0

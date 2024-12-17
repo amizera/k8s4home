@@ -8,7 +8,8 @@ metadata:
   name: kube-state-metrics
   namespace: kube-system
 spec:
-  clusterIP: None
+  type: LoadBalancer
+  loadBalancerIP: 10.0.51.201
   ports:
   - name: http-metrics
     port: 8080
