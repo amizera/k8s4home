@@ -6,16 +6,15 @@ metadata:
     app.kubernetes.io/name: kube-state-metrics
     app.kubernetes.io/version: 2.3.0
   name: kube-state-metrics
-  namespace: kube-system
+  namespace: data
 spec:
   type: LoadBalancer
   loadBalancerIP: 10.0.51.201
   ports:
-  - name: http-metrics
-    port: 8080
-    targetPort: http-metrics
-  - name: telemetry
-    port: 8081
-    targetPort: telemetry
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: http
   selector:
     app.kubernetes.io/name: kube-state-metrics
+    app.kubernetes.io/instance: kube-state-metrics

@@ -8,8 +8,8 @@ metadata:
       prometheus.io/scrape: 'true'
       prometheus.io/port:   '9100'
 spec:
-  type: LoadBalancer
-  loadBalancerIP: 10.0.51.202
+  # type: LoadBalancer
+  # loadBalancerIP: 10.0.51.202
   selector:
       app.kubernetes.io/component: exporter
       app.kubernetes.io/name: node-exporter

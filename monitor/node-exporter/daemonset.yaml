@@ -17,6 +17,10 @@ spec:
         app.kubernetes.io/component: exporter
         app.kubernetes.io/name: node-exporter
     spec:
+      hostNetwork: true
+      # hostPID, hostIPC niekoniecznie potrzebne, ale często używane:
+      hostPID: true
+      hostIPC: true
       containers:
       - args:
         - --path.sysfs=/host/sys
