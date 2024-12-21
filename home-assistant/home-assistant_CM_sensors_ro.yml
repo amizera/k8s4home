@@ -1,0 +1,68 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: ha-sensors-cm
+  namespace: ha
+data:
+  sensors-cm.yaml: |
+    sensor:
+      - platform: template
+        sensors:
+          desired_heating_temperature:
+            friendly_name: "Pożądana Temperatura Grzania"
+            value_template: >
+              {% set tariff = 'unknown' %}
+              {% if is_state('calendar.g13_tariff_low', 'on') %}
+                {% set tariff = 'low' %}
+              {% elif is_state('calendar.g13_tariff_medium', 'on') %}
+                {% set tariff = 'medium' %}
+              {% elif is_state('calendar.g13_tariff_high', 'on') %}
+                {% set tariff = 'high' %}
+              {% endif %}
+              
+              {% set temp_zew = states('sensor.pompa_temperatura_zewnetrzna') | float %}
+              
+              {% if tariff == 'low' %}
+                {% if temp_zew > 15 %}
+                  22
+                {% elif temp_zew > 10 %}
+                  23
+                {% elif temp_zew > 5 %}
+                  25
+                {% elif temp_zew > 0 %}
+                  27
+                {% else %}
+                  29
+                {% endif %}
+              
+              {% elif tariff == 'medium' %}
+                {% if temp_zew > 15 %}
+                  20
+                {% elif temp_zew > 10 %}
+                  20
+                {% elif temp_zew > 5 %}
+                  23
+                {% elif temp_zew > 0 %}
+                  25
+                {% else %}
+                  27
+                {% endif %}
+              
+              {% elif tariff == 'high' %}
+                {% if temp_zew > 15 %}
+                  20
+                {% elif temp_zew > 10 %}
+                  20
+                {% elif temp_zew > 5 %}
+                  22
+                {% elif temp_zew > 0 %}
+                  24
+                {% else %}
+                  26
+                {% endif %}
+              
+              {% else %}
+                24  # Domyślna wartość, gdy taryfa nie jest określona
+              {% endif %}
+    

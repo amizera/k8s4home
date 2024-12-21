@@ -143,6 +143,9 @@ spec:
         - mountPath: /config/scenes/scenes-cm.yaml
           subPath: scenes-cm.yaml
           name: ha-scenes-cm
+        - mountPath: /config/scenes/sensors-cm.yaml
+          subPath: sensors-cm.yaml
+          name: ha-sensors-cm          
         - mountPath: /.dockerenv
           name: volume-dockerenv
         securityContext:
@@ -164,6 +167,9 @@ spec:
       - name: ha-scenes-cm
         configMap:
           name: ha-scenes-cm
+      - name: ha-sensors-cm
+        configMap:
+          name: ha-sensors-cm          
       - name: volume-dockerenv
         emptyDir: {}
       tolerations:

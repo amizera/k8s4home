@@ -18,7 +18,10 @@ data:
     # scripts
     script manual: !include_dir_merge_list scripts/
     # scripts I create in the UI
-    script ui: !include scripts.yaml     
+    script ui: !include scripts.yaml   
+    sensor manual: !include_dir_merge_list sensors/
+    # sensor I create in the UI
+    sensor ui: !include sensors.yaml        
     http:
       use_x_forwarded_for: true
       trusted_proxies:
