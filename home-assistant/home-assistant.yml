@@ -143,7 +143,7 @@ spec:
         - mountPath: /config/scenes/scenes-cm.yaml
           subPath: scenes-cm.yaml
           name: ha-scenes-cm
-        - mountPath: /config/scenes/sensors-cm.yaml
+        - mountPath: /config/sensors/sensors-cm.yaml
           subPath: sensors-cm.yaml
           name: ha-sensors-cm          
         - mountPath: /.dockerenv
