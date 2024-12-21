@@ -1,0 +1,41 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: ha-automations-pcg13-cm
+  namespace: ha
+data:
+  automations-pcg13-cm.yaml: |
+    - alias: "Aktualizuj Temperaturę Pompy Ciepła na Podstawie Taryfy G13 i Temperatury Zewnętrznej"
+    description: "Ustawia temperaturę pompy ciepła zgodnie z taryfą G13 oraz temperaturą zewnętrzną"
+    trigger:
+      - platform: state
+        entity_id:
+          - sensor.desired_heating_temperature
+          - calendar.g13_tariff_low
+          - calendar.g13_tariff_medium
+          - calendar.g13_tariff_high
+          - sensor.pompa_temperatura_zewnetrzna
+      - platform: state
+        entity_id: binary_sensor.pracujoncy
+    condition:
+      - condition: state
+        entity_id: climate.pompa_podloga
+        state: "heat"
+    action:
+      - service: climate.set_temperature
+        target:
+          entity_id: climate.pompa_podloga
+        data:
+          temperature: "{{ states('sensor.desired_heating_temperature') | float }}"
+
+    - alias: "Powiadomienie o Zmianie Temperatury Pompy Ciepła"
+      description: "Wysyła powiadomienie, gdy temperatura pompy ciepła zostanie zmieniona"
+      trigger:
+        - platform: state
+          entity_id: sensor.desired_heating_temperature
+      action:
+        - service: notify.mobile_app_g3n3zyp
+          data:
+            title: "Aktualizacja Temperatury Grzania"
+            message: "Temperatura pompy ciepła została ustawiona na {{ states('sensor.desired_heating_temperature') }}°C"

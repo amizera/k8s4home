@@ -86,7 +86,10 @@ data:
           - sensor.temp_04_battery
           - binary_sensor.pracujoncy
           - sensor.twodypodloga
-          - calendar.g13
+          - calendar.g13_tariff_low
+          - calendar.g13_tariff_medium
+          - calendar.g13_tariff_high
+          - sensor.desired_heating_temperature
     # climate:
     #   - platform: smart_thermostat
     #     name: Smart Thermostat Multiple Valves Example

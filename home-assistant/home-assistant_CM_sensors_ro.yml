@@ -11,13 +11,17 @@ data:
         desired_heating_temperature:
           friendly_name: "Pożądana Temperatura Grzania"
           value_template: >
-            {% set tariff = 'unknown' %}
-            {% if is_state('calendar.g13_tariff_low', 'on') %}
+            {% if is_state('binary_sensor.pracujoncy', 'off') %}
               {% set tariff = 'low' %}
-            {% elif is_state('calendar.g13_tariff_medium', 'on') %}
-              {% set tariff = 'medium' %}
-            {% elif is_state('calendar.g13_tariff_high', 'on') %}
-              {% set tariff = 'high' %}
+            {% else %}
+              {% set tariff = 'unknown' %}
+              {% if is_state('calendar.g13_tariff_low', 'on') %}
+                {% set tariff = 'low' %}
+              {% elif is_state('calendar.g13_tariff_medium', 'on') %}
+                {% set tariff = 'medium' %}
+              {% elif is_state('calendar.g13_tariff_high', 'on') %}
+                {% set tariff = 'high' %}
+              {% endif %}
             {% endif %}
             
             {% set temp_zew = states('sensor.pompa_temperatura_zewnetrzna') | float %}

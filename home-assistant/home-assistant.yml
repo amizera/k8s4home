@@ -146,6 +146,9 @@ spec:
         - mountPath: /config/sensors/sensors-cm.yaml
           subPath: sensors-cm.yaml
           name: ha-sensors-cm          
+        - mountPath: /config/automations/automations-pcg13-cm.yaml
+          subPath: automations-pcg13-cm.yaml
+          name: ha-automations-pcg13-cm              
         - mountPath: /.dockerenv
           name: volume-dockerenv
         securityContext:
@@ -164,6 +167,9 @@ spec:
       - name: ha-automations-lights-cm
         configMap:
           name: ha-automations-lights-cm
+      - name: ha-automations-pcg13-cm
+        configMap:
+          name: ha-automations-pcg13-cm
       - name: ha-scenes-cm
         configMap:
           name: ha-scenes-cm
