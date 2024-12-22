@@ -93,6 +93,19 @@ spec:
     requests:
       storage: 10Gi
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ha-media
+  namespace: ha
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 20Gi         
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -137,6 +150,8 @@ spec:
         volumeMounts:
         - mountPath: /config
           name: ha-vol01
+        - mountPath: /config/media
+          name: media-volume
         - mountPath: /config/configuration.yaml
           subPath: configuration.yaml
           name:  ha-configuration-cm
@@ -158,9 +173,9 @@ spec:
       - name: ha-vol01
         persistentVolumeClaim:
           claimName: home-assistant-pvc
-      # - name: media-volume
-      #   hostPath:
-      #     path: /tmp/media
+      - name: media-volume
+        persistentVolumeClaim:
+          claimName: ha-media
       - name: ha-configuration-cm
         configMap:
           name: ha-configuration-cm

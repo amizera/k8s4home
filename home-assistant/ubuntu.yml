@@ -88,10 +88,23 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: longhorn-retain
+  storageClassName: longhorn
   resources:
     requests:
       storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ha-media
+  namespace: ha
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 20Gi      
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -129,12 +142,11 @@ spec:
         volumeMounts:
         - mountPath: /config
           name: ha-vol01
-        - mountPath: /config/configuration.yaml
-          subPath: configuration.yaml
-          name:  ha-configuration-cm
-        - mountPath: /config/scenes/scenes-cm.yaml
-          subPath: scenes-cm.yaml
-          name: ha-scenes-cm
+        - mountPath: /media
+          name: media-volume
+        # - mountPath: /config/scenes/scenes-cm.yaml
+        #   subPath: scenes-cm.yaml
+        #   name: ha-scenes-cm
         - mountPath: /.dockerenv
           name: volume-dockerenv
         securityContext:
@@ -145,17 +157,17 @@ spec:
         persistentVolumeClaim:
           claimName: ubuntu-pvc
       - name: media-volume
-        hostPath:
-          path: /tmp/media
-      - name: ha-configuration-cm
-        configMap:
-          name: ha-configuration-cm
-      - name: ha-automations-lights-cm
-        configMap:
-          name: ha-automations-lights-cm
-      - name: ha-scenes-cm
-        configMap:
-          name: ha-scenes-cm
+        persistentVolumeClaim:
+          claimName: ha-media
+      # - name: ha-configuration-cm
+      #   configMap:
+      #     name: ha-configuration-cm
+      # - name: ha-automations-lights-cm
+      #   configMap:
+      #     name: ha-automations-lights-cm
+      # - name: ha-scenes-cm
+      #   configMap:
+      #     name: ha-scenes-cm
       - name: volume-dockerenv
         emptyDir: {}
       tolerations:
