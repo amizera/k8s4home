@@ -68,3 +68,28 @@ data:
             {% else %}
               24  # Domyślna wartość, gdy taryfa nie jest określona
             {% endif %}
+
+    - platform: influxdb
+      api_version: 2
+      host: 10.0.0.103
+      port: 8086
+      ssl: false
+      bucket: ha
+      organization: gampnet
+      token: -wVPsmk6flrZaNuIJ1ieqfQ7F0iLtzFj-8MMxckXaellrY5neu3GLpA1eJPJTJ2wgX0e9_pldM_-BHvXZnvKvA==
+      queries_flux:
+        - name: "Średnia temperatura zewnętrzna"
+          unit_of_measurement: "°C"
+          range_start: "-1h"
+          query: >
+              range(start: v.timeRangeStart, stop: v.timeRangeStop)
+              |> filter(fn: (r) => r["_field"] == "value")
+              |> filter(fn: (r) => r["_measurement"] == "°C")
+              |> filter(fn: (r) => r["domain"] == "sensor")
+              |> filter(fn: (r) => r["entity_id"] == "pompa_temperatura_zewnetrzna")
+              |> sort(columns: ["_time"], desc: true) // Posortuj od najnowszych
+              |> limit(n: 3) // Weź 3 ostatnie pomiary
+              |> mean(column: "_value") // Oblicz średnią
+              |> map(fn: (r) => ({r with _value: int(v: r._value)})) // Zaokrąglij do liczby całkowitej
+              |> yield(name: "mean_last_3_rounded")
+            }))

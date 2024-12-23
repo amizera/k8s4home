@@ -150,7 +150,7 @@ spec:
         volumeMounts:
         - mountPath: /config
           name: ha-vol01
-        - mountPath: /config/media
+        - mountPath: /media
           name: media-volume
         - mountPath: /config/configuration.yaml
           subPath: configuration.yaml
