@@ -28,14 +28,30 @@ data:
             entity_id: climate.pompa_podloga
           data:
             temperature: "{{ states('sensor.desired_heating_temperature') | float }}"
+        - service: input_number.set_value
+          target:
+            entity_id: input_number.pompa_last_set_temperature
+          data:
+            value: "{{ states('sensor.desired_heating_temperature') | float }}"
+        - service: input_datetime.set_datetime
+          target:
+            entity_id: input_datetime.pompa_last_set_time
+          data:
+            timestamp: "{{ now().timestamp() | int }}"
 
-    - alias: "Powiadomienie o Zmianie Temperatury Pompy Ciepła"
-      description: "Wysyła powiadomienie, gdy temperatura pompy ciepła zostanie zmieniona"
+    - alias: "Powiadomienie o Ustawieniu Temperatury Pompy Ciepła"
+      description: "Wysyła powiadomienie, gdy temperatura pompy ciepła zostanie ustawiona"
       trigger:
         - platform: state
-          entity_id: sensor.desired_heating_temperature
+          entity_id: climate.pompa_podloga
+      condition:
+        - condition: template
+          value_template: >
+            {{ trigger.to_state.attributes.temperature != trigger.from_state.attributes.temperature }}
       action:
         - service: notify.mobile_app_g3n3zyp
           data:
-            title: "Aktualizacja Temperatury Grzania"
-            message: "Temperatura pompy ciepła została ustawiona na {{ states('sensor.desired_heating_temperature') }}°C"
+            title: "Temperatura Pompy Ciepła Zaktualizowana"
+            message: >
+              Temperatura została ustawiona na {{ states('sensor.desired_heating_temperature') }}°C
+              o godzinie {{ now().strftime('%H:%M:%S') }}.

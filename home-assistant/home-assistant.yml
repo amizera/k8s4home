@@ -126,7 +126,7 @@ spec:
       initContainers:
       - name: mk-directory
         image: busybox:1.35
-        command: ['sh', '-c', 'sleep 5 && echo "creating dir" && mkdir -p /config/automations && mkdir -p /config/scenes && touch /config/scenes.yaml &&  touch /config/automations.yaml && touch /config/customize.yaml && mkdir -p /config/scripts && touch /config/scripts.yaml && mkdir -p /config/sensors && touch /config/sensors.yaml' ]
+        command: ['sh', '-c', 'sleep 5 && echo "creating dir" && mkdir -p /config/automations && mkdir -p /config/scenes && touch /config/scenes.yaml &&  touch /config/automations.yaml && touch /config/customize.yaml && mkdir -p /config/scripts && touch /config/scripts.yaml && mkdir -p /config/sensors && touch /config/sensors.yaml && mkdir -p /config/helpers' ]
         volumeMounts:
         - mountPath: /config
           name: ha-vol01
@@ -136,7 +136,7 @@ spec:
         securityContext:
           privileged: true
       - name: home-assistant
-        image: ghcr.io/home-assistant/home-assistant:2024.12.1
+        image: homeassistant/home-assistant:2024.12.5
         imagePullPolicy: Always
         resources:
           requests:
@@ -161,6 +161,9 @@ spec:
         - mountPath: /config/sensors/sensors-cm.yaml
           subPath: sensors-cm.yaml
           name: ha-sensors-cm          
+        # - mountPath: /config/sensors/helpers-cm.yaml
+        #   subPath: helpers-cm.yaml
+        #   name: ha-helpers-cm             
         - mountPath: /config/automations/automations-pcg13-cm.yaml
           subPath: automations-pcg13-cm.yaml
           name: ha-automations-pcg13-cm              
@@ -190,7 +193,10 @@ spec:
           name: ha-scenes-cm
       - name: ha-sensors-cm
         configMap:
-          name: ha-sensors-cm          
+          name: ha-sensors-cm   
+      # - name: ha-helpers-cm
+      #   configMap:
+      #     name: ha-helpers-cm                      
       - name: volume-dockerenv
         emptyDir: {}
       tolerations:

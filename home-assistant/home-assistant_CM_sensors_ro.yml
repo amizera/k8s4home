@@ -24,7 +24,7 @@ data:
               {% endif %}
             {% endif %}
             
-            {% set temp_zew = states('sensor.pompa_temperatura_zewnetrzna') | float %}
+            {% set temp_zew = states('sensor.srednia_temperatura_zewnetrzna') | float %}
             
             {% if tariff == 'low' %}
               {% if temp_zew > 15 %}
@@ -34,9 +34,9 @@ data:
               {% elif temp_zew > 5 %}
                 25
               {% elif temp_zew > 0 %}
-                27
+                26
               {% else %}
-                29
+                28
               {% endif %}
             
             {% elif tariff == 'medium' %}
@@ -58,17 +58,17 @@ data:
               {% elif temp_zew > 10 %}
                 20
               {% elif temp_zew > 5 %}
-                22
+                21
               {% elif temp_zew > 0 %}
-                24
+                22
               {% else %}
-                26
+                24
               {% endif %}
             
             {% else %}
-              24  # Domyślna wartość, gdy taryfa nie jest określona
+              24
             {% endif %}
-
+            
     - platform: influxdb
       api_version: 2
       host: 10.0.0.103
@@ -82,14 +82,8 @@ data:
           unit_of_measurement: "°C"
           range_start: "-1h"
           query: >
-              range(start: v.timeRangeStart, stop: v.timeRangeStop)
-              |> filter(fn: (r) => r["_field"] == "value")
-              |> filter(fn: (r) => r["_measurement"] == "°C")
-              |> filter(fn: (r) => r["domain"] == "sensor")
-              |> filter(fn: (r) => r["entity_id"] == "pompa_temperatura_zewnetrzna")
-              |> sort(columns: ["_time"], desc: true) // Posortuj od najnowszych
-              |> limit(n: 3) // Weź 3 ostatnie pomiary
-              |> mean(column: "_value") // Oblicz średnią
-              |> map(fn: (r) => ({r with _value: int(v: r._value)})) // Zaokrąglij do liczby całkowitej
-              |> yield(name: "mean_last_3_rounded")
-            }))
+            filter(fn: (r) => r["_field"] == "value" and r["_measurement"] == "°C" and r["domain"] == "sensor" and r["entity_id"] == "pompa_temperatura_zewnetrzna")
+              |> sort(columns: ["_time"], desc: true)
+              |> limit(n: 3)
+              |> mean(column: "_value")
+              |> map(fn: (r) => ({r with _value: int(v: r._value)}))

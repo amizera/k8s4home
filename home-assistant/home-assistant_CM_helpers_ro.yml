@@ -1,0 +1,53 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: ha-helpers-cm
+  namespace: ha
+data:
+  helpers.yaml: |
+    input_number:
+      pompa_last_set_temperature:
+        name: Ostatnio Ustawiona Temperatura
+        min: 0
+        max: 50
+        step: 0.5
+        mode: box
+
+    input_datetime:
+      pompa_last_set_time:
+        name: Ostatni Czas Ustawienia Temperatury
+        has_date: true
+        has_time: true
+    
+    input_boolean:
+      temperature_updated:
+        name: Aktualizacja Temperatury Pompy Ciepła
+        initial: false
+
+    input_text:
+      lastevent_onoff_03:
+        name: LastEvent_OnOff_03
+        mode: text
+        max: 100
+        min: 0
+      lastevent_onoff_05:
+        name: LastEvent_OnOff_05
+        mode: text
+        max: 100
+        min: 0
+      lastevent_onoff_04:
+        name: LastEvent_OnOff_04
+        mode: text
+        max: 100
+        min: 0
+      lastevent_onoff_02:
+        name: LastEvent_OnOff_02
+        mode: text
+        max: 100
+        min: 0
+      lastevent_onoff_01:
+        name: LastEvent_OnOff_01
+        mode: text
+        max: 100
+        min: 0

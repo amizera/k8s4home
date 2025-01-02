@@ -9,19 +9,31 @@ data:
     default_config:
     frontend:
       themes: !include_dir_merge_named themes
+    
+    ### scenes ###
     scene manual: !include_dir_merge_list scenes/
     scene ui: !include scenes.yaml
-    # My own handmade automations
+    
+    ### automations ###
     automation manual: !include_dir_merge_list automations/
     # Automations I create in the UI
     automation ui: !include automations.yaml
-    # scripts
+    
+    #### scripts ###
     script manual: !include_dir_merge_list scripts/
     # scripts I create in the UI
     script ui: !include scripts.yaml   
+    
+    ### sensors ###
     sensor manual: !include_dir_merge_list sensors/
     # sensor I create in the UI
-    sensor ui: !include sensors.yaml        
+    sensor ui: !include sensors.yaml      
+    
+    ### helpers ###
+    # helpers manual: !include_dir_merge_list helpers/
+    # # helpers I create in the UI
+    # helpers ui: !include helpers.yaml  
+
     http:
       use_x_forwarded_for: true
       trusted_proxies:
@@ -67,6 +79,10 @@ data:
         entities:
           - weather.forecast_dom
           - sensor.pompa_temperatura_zewnetrzna
+          - sensor.pompa_zuzycie_energii
+          - sensor.pompa_ogrzewanie_zuzycie_energii
+          - sensor.pompa_ogrzewanie_skumulowane_zuzycie_energii
+          - sensor.pompa_skumulowane_zuzycie_energii
           - sensor.sensor_klimatu_01_bme680_temperatura
           - sensor.temp_01_temperature
           - sensor.temp_01_pressure
@@ -90,6 +106,13 @@ data:
           - calendar.g13_tariff_medium
           - calendar.g13_tariff_high
           - sensor.desired_heating_temperature
+          - input_number.pompa_last_set_temperature
+          - input_datetime.pompa_last_set_time
+          - sensor.load_l1
+          - sensor.load_l2
+          - sensor.load_l3
+          - sensor.pv1_power
+          - sensor.pv2_power
     # climate:
     #   - platform: smart_thermostat
     #     name: Smart Thermostat Multiple Valves Example
@@ -112,3 +135,49 @@ data:
     #     output_min: 0
     #     output_max: 99
     #     pwm: 0
+    
+    input_number:
+      pompa_last_set_temperature:
+        name: Ostatnio Ustawiona Temperatura
+        min: 0
+        max: 50
+        step: 0.5
+        mode: box
+
+    input_datetime:
+      pompa_last_set_time:
+        name: Ostatni Czas Ustawienia Temperatury
+        has_date: true
+        has_time: true
+    
+    input_boolean:
+      temperature_updated:
+        name: Aktualizacja Temperatury Pompy Ciepła
+        initial: false
+
+    input_text:
+      lastevent_onoff_03:
+        name: LastEvent_OnOff_03
+        mode: text
+        max: 100
+        min: 0
+      lastevent_onoff_05:
+        name: LastEvent_OnOff_05
+        mode: text
+        max: 100
+        min: 0
+      lastevent_onoff_04:
+        name: LastEvent_OnOff_04
+        mode: text
+        max: 100
+        min: 0
+      lastevent_onoff_02:
+        name: LastEvent_OnOff_02
+        mode: text
+        max: 100
+        min: 0
+      lastevent_onoff_01:
+        name: LastEvent_OnOff_01
+        mode: text
+        max: 100
+        min: 0
