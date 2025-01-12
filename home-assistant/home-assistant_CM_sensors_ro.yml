@@ -82,7 +82,7 @@ data:
           unit_of_measurement: "°C"
           range_start: "-1h"
           query: >
-            filter(fn: (r) => r["_field"] == "value" and r["_measurement"] == "°C" and r["domain"] == "sensor" and r["entity_id"] == "pompa_temperatura_zewnetrzna")
+            filter(fn: (r) => r["_field"] == "value" and r["entity_id"] == "pompa_temperatura_zewnetrzna")
               |> sort(columns: ["_time"], desc: true)
               |> limit(n: 3)
               |> mean(column: "_value")
